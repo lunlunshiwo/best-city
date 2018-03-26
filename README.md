@@ -61,13 +61,9 @@ app.get('/nowcity', function (req, res) {
 ## 2.vue脚手架
 　　　　本次组件基于vue框架，我使用vue-cli脚手架搭建的，这一块知识不多做描述，参考我的博客《vue环境搭建与创建第一个vuejs文件》。
 ## 3.stylus  
-    本次我使用了css预处理程序——stylus。  
-    在vue-cli中使用stylus首先要安装依赖  
-    `npm install stylus --save-dev、npm install stylus-loader --save-dev`  
-    然后再文件中使用  
-    `<style lang="stylus" scoped>` 
-    引入单独的stylus文件使用  
-    `@import '~common/stylus/css.styl'`
+  
+  本次我使用了css预处理程序——stylus。在vue-cli中使用stylus首先要安装依赖：npm install stylus --save-dev、npm install stylus-loader --save-dev。然后再文件中使用<style lang="stylus" scoped>。  
+  引入单独的stylus文件使用@import '~common/stylus/css.styl'
 ## 4.本次项目的依赖
 　　本次项目中，除了安装了有关stylus的依赖我还引入了better-scroll、fastclick、axios这三个依赖。  
     better-scroll是我见过的最好的处理移动端滚动的库了，并且文档清晰，思路明确。fastclick用于处理移动端click事件300毫秒延迟。至于axios，我想大家都知道，axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
