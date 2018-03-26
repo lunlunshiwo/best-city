@@ -374,7 +374,7 @@ methods: {
   在向上传递时有一个减少交互和运算的效果，用定时器实现的，上文有讲到。
 ## 2.定位组件
 ```HTML
-<!--父组件模块->
+<!--父组件模块-->
 <position-box :chooseCity="chooseCity" :orientate="nowCity" :historyCityArr="historyCityArr" @changeCity="changeCity"></position-box>
 <!--子组件模块-->
   <div class="position-box">
@@ -664,8 +664,8 @@ export function getIndex (arr, query) {
 # 总结：  
   
   感觉写的脑袋疼，这个城市选择组件的形式被应用于各种app和网站，是继省市二级联动之后城市选择功能的实现形式。逻辑颇多，大多在上面被提到。  
-  使用方式为先用node起一个express服务（指令为——node .\playDate.js），文件地址：[ChooseCityServe](https://github.com/lunlunshiwo/ChooseCityServe)，再运行vue-cli（指令为npm insatll,npm run dev）。
-  至于如何起两个服务，自行参考cmd和power shell。  
+  使用方式为先用node起一个express服务（指令为——node .\playDate.js），文件地址：[ChooseCityServe](https://github.com/lunlunshiwo/ChooseCityServe)，再运行vue-cli（指令为npm insatll,npm run dev）。  
+  至于如何起两个服务，自行参考cmd和power shell。  
   码字不易，且看且珍惜。  
   原创博客，若侵犯贵司的利益，请私信我删除。  
   若觉得不错，求个赞和github的star。
