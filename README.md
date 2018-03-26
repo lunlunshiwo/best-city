@@ -669,6 +669,10 @@ export function getIndex (arr, query) {
   码字不易，且看且珍惜。  
   原创博客，若侵犯贵司的利益，请私信我删除。  
   若觉得不错，求个赞和github的star。
-
+# 有问题反馈  
+  
+  在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流  
+  QQ: 732860782
+  微信：lunlunshiwo
  
  
