@@ -124,8 +124,9 @@ this.$emit('txtdata', this.searchText)
     }
    ```  
    
-## 7.延迟操作
-    我们在处理前端的ajax时一般希望减少交互来提高性能和效率。在搜索框组件中，我们使用到了联想搜索的功能，这里我使用正则实现的。因此在打字的过程中，我们希望在打字完成菜进行交互（总不能让浏览器一直都在遍历数组或者Ajax）。在这里我使用了一个定时函数完成延时效果：
+## 7.延迟操作  
+  
+  我们在处理前端的ajax时一般希望减少交互来提高性能和效率。在搜索框组件中，我们使用到了联想搜索的功能，这里我使用正则实现的。因此在打字的过程中，我们希望在打字完成菜进行交互（总不能让浏览器一直都在遍历数组或者Ajax）。在这里我使用了一个定时函数完成延时效果：
 ```Javascript
 if (this.timer) {
    clearTimeout(this.timer) // 清除定时器
@@ -170,7 +171,8 @@ export function getSearchList (text, list) {
   return resList
 }
 ````  
-    JavaScript通过内置对象RegExp支持正则表达式，有两种方式创建正则表达式对象，分别是构造函数var reg=new RegExp('<%[^%>]+%>','g')和字面量var reg=/<%[^%>]%>/g，因为我这次用到了模板语句，就是用了构造函数，最后的g代表全局。
+  
+  JavaScript通过内置对象RegExp支持正则表达式，有两种方式创建正则表达式对象，分别是构造函数var reg=new RegExp('<%[^%>]+%>','g')和字面量var reg=/<%[^%>]%>/g，因为我这次用到了模板语句，就是用了构造函数，最后的g代表全局。
 ```Javascript
 //匹配一个字符，这个字符可以是0-9中的任意一个 
 var reg1 = /[0123456789]/ 
@@ -183,7 +185,8 @@ var reg3 = /[a-zA-Z0-9]/
 //匹配一个字符，这个字符可以是汉字的任意一个 
 var reg4 = /[\\u4E00-\\u9FFF]/
 ```  
-    我们还能引入开头结尾的限制：
+  
+  我们还能引入开头结尾的限制：
 * ^	以xxx开头
 * $	以xxx结尾
 * \b	单词边界
@@ -195,16 +198,19 @@ var reg4 = /[\\u4E00-\\u9FFF]/
 * {n}	出现n次
 * {n,m}	出现n到m次
 * {n,}	至少出现n次
-## 9.this.$refs
-    一般来讲，获取DOM元素，需document.querySelector（".input1"）获取这个dom节点，然后在获取input1的值。但是用ref绑定之后，我们就不需要在获取dom节点了，直接在上面的input上绑定input1，然后$refs里面调用就行。然后在javascript里面这样调用：this.$refs.input1  这样就可以减少获取dom节点的消耗了。
+## 9.this.$refs  
+  
+  一般来讲，获取DOM元素，需document.querySelector（".input1"）获取这个dom节点，然后在获取input1的值。但是用ref绑定之后，我们就不需要在获取dom节点了，直接在上面的input上绑定input1，然后$refs里面调用就行。然后在javascript里面这样调用：this.$refs.input1  这样就可以减少获取dom节点的消耗了。
 ```HTML
 <div ref="wrapper" class="scroll">
 </div>
-```   
-    此时this.$refs('wrapper')就代表了这个div
-## 10.slot
-    通过字面意思理解，slot为“插槽，水沟”，大概就是一个安放组件或者dom结构的地方。子组件模板必须包含至少一个 <slot> 插口，否则父组件的内容将会被丢弃。当子组件模板只有一个没有属性的插槽时，父组件传入的整个内容片段将插入到插槽所在的 DOM 位置，并替换掉插槽标签本身。最初在 <slot> 标签中的任何内容都被视为备用内容。备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。  
-    假定 my-component 组件有如下模板：
+```  
+  
+  此时this.$refs('wrapper')就代表了这个div
+## 10.slot  
+  
+  通过字面意思理解，slot为“插槽，水沟”，大概就是一个安放组件或者dom结构的地方。子组件模板必须包含至少一个 <slot> 插口，否则父组件的内容将会被丢弃。当子组件模板只有一个没有属性的插槽时，父组件传入的整个内容片段将插入到插槽所在的 DOM 位置，并替换掉插槽标签本身。最初在 <slot> 标签中的任何内容都被视为备用内容。备用内容在子组件的作用域内编译，并且只有在宿主元素为空，且没有要插入的内容时才显示备用内容。  
+  假定 my-component 组件有如下模板：
 ```HTML
 <div>
   <h2>我是子组件的标题</h2>
@@ -212,8 +218,9 @@ var reg4 = /[\\u4E00-\\u9FFF]/
     只有在没有要分发的内容时才会显示。
   </slot>
 </div>
-```
-    父组件模板：
+```  
+  
+  父组件模板：
 ```HTML
 <div>
   <h1>我是父组件的标题</h1>
@@ -222,8 +229,9 @@ var reg4 = /[\\u4E00-\\u9FFF]/
     <p>这是更多的初始内容</p>
   </my-component>
 </div>
-```
-    渲染结果：
+```  
+  
+  渲染结果：
 ```HTML
 <div>
   <h1>我是父组件的标题</h1>
@@ -234,7 +242,8 @@ var reg4 = /[\\u4E00-\\u9FFF]/
   </div>
 </div>
 ```  
-    本次项目的插槽：
+  
+  本次项目的插槽：
 ```HTML
 <!--父组件-->
 <scroll :data="citylist" ref="suggest" :probeType="3" :listenScroll="true" @distance="distance" @scrollStore="scrollStore">
@@ -266,26 +275,27 @@ this.scroll = new BScroll(this.$refs.wrapper, {
   
   通过构建一个scroll对象来使用better-scroll，这里必须绑定一个dom节点，即this.$refs.wrapper。里面添加一些属性来自定义。  
   在本次项目中，我们使用了Bscroll的三个方法：  
-  refresh()  
+  refresh()  
 * 参数：无
 * 返回值：无
 * 作用：重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。  
   
   scrollTo(x, y, time, easing)
-    * 参数：返回值：无
-    * {Number} x 横轴坐标（单位 px）
-    * {Number} y 纵轴坐标（单位 px）
-    * {Number} time 滚动动画执行的时长（单位 ms）
-    * {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
-    * 作用：滚动到指定的位置  
-scrollToElement(el, time, offsetX, offsetY, easing)
-    * 参数：返回值：无
-    * {DOM | String} el 滚动到的目标元素, 如果是字符串，则内部会尝试调用 querySelector 转换成 DOM 对象。（此处我使用了this.$refs）
-    * {Number} time 滚动动画执行的时长（单位 ms）
-    * {Number | Boolean} offsetX 相对于目标元素的横轴偏移量，如果设置为 true，则滚到目标元素的中心位置
-    * {Number | Boolean} offsetY 相对于目标元素的纵轴偏移量，如果设置为 true，则滚到目标元素的中心位置
-    * {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
-    * 作用：滚动到指定的目标元素。
+* 参数：返回值：无
+* {Number} x 横轴坐标（单位 px）
+* {Number} y 纵轴坐标（单位 px）
+* {Number} time 滚动动画执行的时长（单位 ms）
+* {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
+* 作用：滚动到指定的位置  
+  
+  scrollToElement(el, time, offsetX, offsetY, easing)
+* 参数：返回值：无
+* {DOM | String} el 滚动到的目标元素, 如果是字符串，则内部会尝试调用 querySelector 转换成 DOM 对象。（此处我使用了this.$refs）
+* {Number} time 滚动动画执行的时长（单位 ms）
+* {Number | Boolean} offsetX 相对于目标元素的横轴偏移量，如果设置为 true，则滚到目标元素的中心位置
+* {Number | Boolean} offsetY 相对于目标元素的纵轴偏移量，如果设置为 true，则滚到目标元素的中心位置
+* {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
+* 作用：滚动到指定的目标元素。
 
 　　12.localstorage
 　　　　我相信大家对localstorage和sessionstorage的区别已经都懂了，其最大的区别就是localstorage像ROM，而sessionstorage像RAM。
