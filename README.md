@@ -275,6 +275,7 @@ this.scroll = new BScroll(this.$refs.wrapper, {
   
   通过构建一个scroll对象来使用better-scroll，这里必须绑定一个dom节点，即this.$refs.wrapper。里面添加一些属性来自定义。  
   在本次项目中，我们使用了Bscroll的三个方法：  
+    
   refresh()  
 * 参数：无
 * 返回值：无
@@ -297,40 +298,43 @@ this.scroll = new BScroll(this.$refs.wrapper, {
 * {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
 * 作用：滚动到指定的目标元素。
 
-　　12.localstorage
-　　　　我相信大家对localstorage和sessionstorage的区别已经都懂了，其最大的区别就是localstorage像ROM，而sessionstorage像RAM。
-
-　　　　在本次项目中，通过setItem和getItem来操作localstorage：
-
+## 12.localstorage  
+  
+  我相信大家对localstorage和sessionstorage的区别已经都懂了，其最大的区别就是localstorage像ROM，而sessionstorage像RAM。  
+  在本次项目中，通过setItem和getItem来操作localstorage：
+```Javascript
 localStorage.setItem('historyCityArr', arr)
 localStorage.getItem('historyCityArr')
-　　13.过渡transition
-　　　　类似于在单位渲染和移除的时候添加一个动画特效。
-
+```
+## 13.过渡transition  
+  
+  类似于在单位渲染和移除的时候添加一个动画特效。
+```HTML
     <transition name="flag">
       <div class="nowFlag" v-if="flag">{{flagText}}</div>
     </transition>
+```
+```CSS
 　　.flag-leave-active
   　　transition all 1s
 　　.flag-leave-to
   　　opacity 0
-　　　　对于至一段的解释为，添加一个离开（移除）的过渡，一秒钟内不透明度由1变成0。
+```  
+  
+  对于至一段的解释为，添加一个离开（移除）的过渡，一秒钟内不透明度由1变成0。
+## 14.stop&prevent  
+  
+  在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。为了解决这个问题，Vue.js 为 v-on 提供了事件修饰符。之前提过，修饰符是由点开头的指令后缀来表示的。
+* .stop 阻止事件冒泡
+* .prevent 阻止默认事件
+* .capture　阻止事件捕获
+* .once 只触发一次  
 
-　　14.stop&prevent
-　　　　在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。为了解决这个问题，Vue.js 为 v-on 提供了事件修饰符。之前提过，修饰符是由点开头的指令后缀来表示的。
-
-　　　　.stop 阻止事件冒泡
-
-　　　　.prevent 阻止默认事件
-
-　　　　.capture　阻止事件捕获
-
-　　　　.once 只触发一次
-
-业务部分：
-　　1.搜索框组件
-　　　　html代码如下：父组件向子组件传递是否清空内容的信息（用于点击搜索页选项后更改搜索页），子组件触发keyup事件时向父组件传递需要搜索的内容。
-
+# 业务部分：
+## 1.搜索框组件  
+  
+  html代码如下：父组件向子组件传递是否清空内容的信息（用于点击搜索页选项后更改搜索页），子组件触发keyup事件时向父组件传递需要搜索的内容。
+```HTML
 <!--父组件-->
 <search @txtdata="searchText" :clearText="clearSearch"></search>
 <!--子组件-->
@@ -342,6 +346,8 @@ localStorage.getItem('historyCityArr')
       </div>
     </div>
 </div>
+```
+```Javascript
 //子组件js  
 methods: {
     // 延时搜索
@@ -363,9 +369,11 @@ methods: {
       }
     }
   }
-　　　　在向上传递时有一个减少交互和运算的效果，用定时器实现的，上文有讲到。
-
-　　2.定位组件
+```  
+  
+  在向上传递时有一个减少交互和运算的效果，用定时器实现的，上文有讲到。
+## 2.定位组件
+```HTML
 <!--父组件模块->
 <position-box :chooseCity="chooseCity" :orientate="nowCity" :historyCityArr="historyCityArr" @changeCity="changeCity"></position-box>
 <!--子组件模块-->
@@ -389,8 +397,10 @@ methods: {
       </div>
     </div>
   </div>
-　　　　在这一部分里面，一开始加载页面的时候会触发两个事件：定位和读取localstorage里面存储的历史查看的记录。
-
+```  
+  
+  在这一部分里面，一开始加载页面的时候会触发两个事件：定位和读取localstorage里面存储的历史查看的记录。
+```Javascript
 　　　　axios.get('http://localhost:1234/nowcity').then((res) => {
         this.nowCity = res.data.city
         if (!this.choiceCity && !this.choiceCityName) {
@@ -404,10 +414,11 @@ methods: {
           this.choiceCityName = this.nowCity
         }
       })
-　　　　定位部分逻辑简单，无非就是获取数据，如果获取不到默认为北京。
-
-　　　　localstorage的数据处理就在这个组件中：
-
+```  
+  
+  定位部分逻辑简单，无非就是获取数据，如果获取不到默认为北京。  
+  localstorage的数据处理就在这个组件中：
+```Javascript
     setHistory (arr) {
       localStorage.setItem('historyCityArr', arr)
     },
@@ -435,20 +446,24 @@ methods: {
         this.choiceCityName = name
       }
     }
-　　　　当查看到城市发生变化时，出触发两个setItem事件（无论是存数组还是字符串），以便于在此打开时getItem可以获取到数据。一开始加载页面时，会发两个get事件，获取到数据之后传入定位模块中渲染数据。get得到的信息是字符串，我们获取到之后要转转化为数组。
-
-　　3.页面城市组件
+```  
+  
+  当查看到城市发生变化时，出触发两个setItem事件（无论是存数组还是字符串），以便于在此打开时getItem可以获取到数据。一开始加载页面时，会发两个get事件，获取到数据之后传入定位模块中渲染数据。get得到的信息是字符串，我们获取到之后要转转化为数组。
+## 3.页面城市组件
+```HTML
 <!--父组件模块-->
 <city-list :citylist="citylist" :elementIndex="elementIndex" @positionCity="changeCity" @singleLetter="singleLetter"></city-list>
 <!--子组件模块-->
 <div class="lists">
-    <div v-for="citys in citylist" :key="citys[0]" :dataNum="citys[1].length">
-      <p class="city-title" :ref="citys[0]">{{citys[0]}}</p>
-      <p class="city-item" v-for="city in citys[1]" :key="city.id" @click="changeCity(city.name)">{{city.name}}</p>
-    </div>
+  <div v-for="citys in citylist" :key="citys[0]" :dataNum="citys[1].length">
+    <p class="city-title" :ref="citys[0]">{{citys[0]}}</p>
+    <p class="city-item" v-for="city in citys[1]" :key="city.id" @click="changeCity(city.name)">{{city.name}}</p>
   </div>
-　　　　单说这个组件呢，属于很简单的那种，仅仅有展示渲染信息和点击城市选项向上传递城市信息值的功能。但是后面增加了右边栏nav之后又增加了向上传递dom节点的功能：
-
+</div>
+```  
+  
+  单说这个组件呢，属于很简单的那种，仅仅有展示渲染信息和点击城市选项向上传递城市信息值的功能。但是后面增加了右边栏nav之后又增加了向上传递dom节点的功能：
+```Javascript
 // 父组件
 singleLetter (dom) {
    this.$refs.suggest.scrollToElement(dom, 200, false, false)
@@ -460,40 +475,44 @@ elementIndex (val) {
    }
    this.$emit('singleLetter', this.$refs[val][0])
 }
-　　　　父组件获取到城市组件上传的城市dom节点信息之后触发Bscroll的scrollToElement方法，0.2秒内滚动到相应位置。
-
-　　4.弹窗组件
-　　　　这个组件为点击选择城市之后（并且点击的城市不是当前已经查看的城市）触发。
-
+```  
+  
+  父组件获取到城市组件上传的城市dom节点信息之后触发Bscroll的scrollToElement方法，0.2秒内滚动到相应位置。
+## 4.弹窗组件  
+  
+  这个组件为点击选择城市之后（并且点击的城市不是当前已经查看的城市）触发。
+```HTML
 <!--父组件模块-->
 <mask-box v-if="maskShow" :message="maskMessage" @chooseing="chooseResult"></mask-box>
 <!--子组件模块-->
 <div class="mask-box">
-    <div class="mask-body"></div>
-    <div class="btn-box">
-      <div class="message">
-        <p>{{message}}</p>
-      </div>
-      <div class="btn-left" @click="chooseTrue()">
-        <p>确定</p>
-      </div>
-      <div class="btn-right" @click="chooseFalse()">
-        <p>取消</p>
-      </div>
+  <div class="mask-body"></div>
+  <div class="btn-box">
+    <div class="message">
+      <p>{{message}}</p>
+    </div>
+    <div class="btn-left" @click="chooseTrue()">
+      <p>确定</p>
+    </div>
+    <div class="btn-right" @click="chooseFalse()">
+      <p>取消</p>
     </div>
   </div>
- 
-
-　　　　js部分非常简单
-
+</div>
+```  
+  
+  js部分非常简单
+```Javascript
 　　chooseTrue () {
       this.$emit('chooseing', true)
     },
     chooseFalse () {
       this.$emit('chooseing', false)
     }
-　　　　根据点击的按钮的不同向上传值。当传值为true时触发父组件一个事件，让页面滚动到顶部。
-
+```  
+  
+  根据点击的按钮的不同向上传值。当传值为true时触发父组件一个事件，让页面滚动到顶部。
+```Javascript
 // 是否确认切换定位
     chooseResult (res) {
       if (!res) {
@@ -508,9 +527,11 @@ elementIndex (val) {
         this.maskClose()
       }
     }
-　　5.搜索列表组件
-　　　　这个组件页面代码不过，逻辑代码也比较简单，用到了上文的正则，不多做解释。
-
+```
+## 5.搜索列表组件  
+  
+  这个组件页面代码不过，逻辑代码也比较简单，用到了上文的正则，不多做解释。
+```HTML
 <!--父组件模块-->
     <transition name="list">
       <search-list v-if="associationShow" :searchListContent="searchListContent" @changeName="changeCity"></search-list>
@@ -523,9 +544,11 @@ elementIndex (val) {
       </div>
     </scroll>
   </div>
-　　　　组件仅作展示和点击选择城市，功能与3组件相同，但是没有Bscroll的滚动事件。
-
-　　6.右边栏nav组件
+```  
+  
+  组件仅作展示和点击选择城市，功能与3组件相同，但是没有Bscroll的滚动事件。
+## 6.右边栏nav组件
+```HTML
 <!--父组件模块-->
 <nav-list :navList="cityIndexList" @toElement="toElement" :flagText="flagText"></nav-list>
 <!--子组件模块-->
@@ -536,30 +559,33 @@ elementIndex (val) {
       </div>
    < /div>
 </div>
-　　　　这部分html代码量比较少，但是与其他组件的联动最多，比如点击nav上的字母使页面城市组件滚动到相应的位置了、在上面滑动实现页面城市组件的持续滚动等。
-
-　　　　在点击nav上的字母使页面城市组件滚动到相应的位置这个功能中，点击触发了touchstart这个事件：
-
+```  
+  
+  这部分html代码量比较少，但是与其他组件的联动最多，比如点击nav上的字母使页面城市组件滚动到相应的位置了、在上面滑动实现页面城市组件的持续滚动等。  
+  在点击nav上的字母使页面城市组件滚动到相应的位置这个功能中，点击触发了touchstart这个事件：
+```Javascript
     start (e) {
       let item = handleDomData(e.target, 'data-name')
       this.touch.start = e.touches[0].pageY
       this.touch.startIndex = getIndex(this.navList, item)
       this.scrollToElement(item)
     }
-　　　　记录第一次点击的位置为以后的滑动提供起点的高度，并且触发scrollToElement事件，向上传值，让父组件的scroll滚动到相应的位置。
-
-　　　　在滑动实现页面城市组件的持续滚动这个功能在，触发touchmove这个事件：
-
+```  
+  
+  记录第一次点击的位置为以后的滑动提供起点的高度，并且触发scrollToElement事件，向上传值，让父组件的scroll滚动到相应的位置。  
+  在滑动实现页面城市组件的持续滚动这个功能在，触发touchmove这个事件：
+```Javascript
     move (e) {
       this.touch.end = e.touches[0].pageY
       let distance = this.touch.end - this.touch.start
       this.touch.endIndex = Math.min(Math.max(this.touch.startIndex + Math.floor((distance + 10) / 20), 0), 22)
       this.scrollToElement(this.navList[this.touch.endIndex])
     }
-　　　　通过滚动过程中的距离量计算当前所处的字母，并上传改字母，让父组件的scroll滚动到相应的位置。
-
-　　　　在这个组件中，我们引入了两个js函数，分别是start中的handleDomData和getIndex
-
+```  
+  
+  通过滚动过程中的距离量计算当前所处的字母，并上传改字母，让父组件的scroll滚动到相应的位置。  
+  在这个组件中，我们引入了两个js函数，分别是start中的handleDomData和getIndex。
+```Javascript
 // 获取或者给dom属性赋值
 export function handleDomData (el, name, val) {
   if (val) {
@@ -579,14 +605,18 @@ export function getIndex (arr, query) {
   })
   return key
 }
-　　7.（非组件）字母显示卡片
-　　　　这个小东西不是一个组件，但是有一定的功能，因此放在了这里。代码超简单，就是接受两个参数，是否显示和显示啥：
-
+```
+## 7.（非组件）字母显示卡片  
+  
+  这个小东西不是一个组件，但是有一定的功能，因此放在了这里。代码超简单，就是接受两个参数，是否显示和显示啥：
+```HTML
     <transition name="flag">
       <div class="nowFlag" v-if="flag">{{flagText}}</div>
     </transition>
-　　　　是否显示这个参数来自与scroll基础组件的三个事件：
-
+```  
+  
+  是否显示这个参数来自与scroll基础组件的三个事件：
+```Javascript
       // 监听scroll事件
       if (this.listenScroll) {
         // 滚动开始时触发
@@ -603,10 +633,11 @@ export function getIndex (arr, query) {
           this.$emit('scrollStore', false)
         })
       }
-　　　　this.listenScroll这个参数我们在搜索列表上不调用，因此默认为false，只有在主页面时传true。触发时监听scroll组件的活动情况，比如滚动开始时上传true，正在滚动中传true，结束时传false来控制卡片的显示与隐藏。
-
-　　　　卡片上面的字时根据滚动到的距离计算得出的：
-
+```  
+  
+  this.listenScroll这个参数我们在搜索列表上不调用，因此默认为false，只有在主页面时传true。触发时监听scroll组件的活动情况，比如滚动开始时上传true，正在滚动中传true，结束时传false来控制卡片的显示与隐藏。  
+  卡片上面的字时根据滚动到的距离计算得出的：
+```Javascript
     // 根据滑动距离显示字母牌上的字
     distance (val) {
       for (let i = 0, len = this.arrHeight.length; i < len; i++) {
@@ -627,22 +658,17 @@ export function getIndex (arr, query) {
       })
       return distanceArr
     }
-　　　　得到的字母除了在这个卡片使用还会传入navList组件中，实现当前所处字母的样式的区别。
-
-总结：
-　　　　感觉写的脑袋疼，这个城市选择组件的形式被应用于各种app和网站，是继省市二级联动之后城市选择功能的实现形式。逻辑颇多，大多在上面被提到。
-
-　　　　项目也上传github，地址为：https://github.com/lunlunshiwo/ChooseCity。使用方式为先用node起一个express服务（指令为——node .\playDate.js），再运行vue-cli（指令为npm run dev）。
-
-　　　　至于如何起两个服务，自行参考cmd和power shell。
-
- 
-
-　　　　码字不易，且看且珍惜。
-
-　　　　原创博客，若侵犯贵司的利益，请私信我删除。
-
-　　　　若觉得不错，求个赞和github的star。
+```  
+  
+  得到的字母除了在这个卡片使用还会传入navList组件中，实现当前所处字母的样式的区别。
+# 总结：  
+  
+  感觉写的脑袋疼，这个城市选择组件的形式被应用于各种app和网站，是继省市二级联动之后城市选择功能的实现形式。逻辑颇多，大多在上面被提到。  
+  使用方式为先用node起一个express服务（指令为——node .\playDate.js），文件地址：[ChooseCityServe](https://github.com/lunlunshiwo/ChooseCityServe)，再运行vue-cli（指令为npm insatll,npm run dev）。
+  至于如何起两个服务，自行参考cmd和power shell。  
+  码字不易，且看且珍惜。  
+  原创博客，若侵犯贵司的利益，请私信我删除。  
+  若觉得不错，求个赞和github的star。
 
  
  
