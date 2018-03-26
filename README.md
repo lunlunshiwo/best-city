@@ -187,8 +187,8 @@ var reg4 = /[\\u4E00-\\u9FFF]/
 * \B	非单词边界
 　　数量量词：
 * ?	出现零次或一次（最多出现一次）
-* +	出现一次或多次（至少出现一次）
-* *	出现零次或多次（任意次）
+* \+	出现一次或多次（至少出现一次）
+* \*	出现零次或多次（任意次）
 * {n}	出现n次
 * {n,m}	出现n到m次
 * {n,}	至少出现n次
@@ -263,24 +263,24 @@ this.scroll = new BScroll(this.$refs.wrapper, {
     通过构建一个scroll对象来使用better-scroll，这里必须绑定一个dom节点，即this.$refs.wrapper。里面添加一些属性来自定义。  
     在本次项目中，我们使用了Bscroll的三个方法：  
     refresh()
-    *参数：无
-    *返回值：无
-    *作用：重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。  
+    * 参数：无
+    * 返回值：无
+    * 作用：重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。  
     scrollTo(x, y, time, easing)
-    *参数：返回值：无
-    *{Number} x 横轴坐标（单位 px）
-    *{Number} y 纵轴坐标（单位 px）
-    *{Number} time 滚动动画执行的时长（单位 ms）
-    *{Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
-    *作用：滚动到指定的位置  
+    * 参数：返回值：无
+    * {Number} x 横轴坐标（单位 px）
+    * {Number} y 纵轴坐标（单位 px）
+    * {Number} time 滚动动画执行的时长（单位 ms）
+    * {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
+    * 作用：滚动到指定的位置  
     scrollToElement(el, time, offsetX, offsetY, easing)
-    *参数：返回值：无
-    *{DOM | String} el 滚动到的目标元素, 如果是字符串，则内部会尝试调用 querySelector 转换成 DOM 对象。（此处我使用了this.$refs）
-    *{Number} time 滚动动画执行的时长（单位 ms）
-    *{Number | Boolean} offsetX 相对于目标元素的横轴偏移量，如果设置为 true，则滚到目标元素的中心位置
-    *{Number | Boolean} offsetY 相对于目标元素的纵轴偏移量，如果设置为 true，则滚到目标元素的中心位置
-*{Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
-*作用：滚动到指定的目标元素。
+    * 参数：返回值：无
+    * {DOM | String} el 滚动到的目标元素, 如果是字符串，则内部会尝试调用 querySelector 转换成 DOM 对象。（此处我使用了this.$refs）
+    * {Number} time 滚动动画执行的时长（单位 ms）
+    * {Number | Boolean} offsetX 相对于目标元素的横轴偏移量，如果设置为 true，则滚到目标元素的中心位置
+    * {Number | Boolean} offsetY 相对于目标元素的纵轴偏移量，如果设置为 true，则滚到目标元素的中心位置
+    * {Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 ease.js 里的写法
+    * 作用：滚动到指定的目标元素。
 
 　　12.localstorage
 　　　　我相信大家对localstorage和sessionstorage的区别已经都懂了，其最大的区别就是localstorage像ROM，而sessionstorage像RAM。
