@@ -260,13 +260,15 @@ this.scroll = new BScroll(this.$refs.wrapper, {
         resizePolling: 60 // 重新调整窗口大小时，重新计算better-scroll的时间间隔
 })
 ```  
-通过构建一个scroll对象来使用better-scroll，这里必须绑定一个dom节点，即this.$refs.wrapper。里面添加一些属性来自定义。  
-在本次项目中，我们使用了Bscroll的三个方法：  
-refresh()
-    * 参数：无
-    * 返回值：无
-    * 作用：重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。  
-scrollTo(x, y, time, easing)
+  
+  通过构建一个scroll对象来使用better-scroll，这里必须绑定一个dom节点，即this.$refs.wrapper。里面添加一些属性来自定义。  
+  在本次项目中，我们使用了Bscroll的三个方法：  
+  refresh()  
+* 参数：无
+* 返回值：无
+* 作用：重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。  
+  
+  scrollTo(x, y, time, easing)
     * 参数：返回值：无
     * {Number} x 横轴坐标（单位 px）
     * {Number} y 纵轴坐标（单位 px）
