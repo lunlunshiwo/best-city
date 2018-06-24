@@ -175,7 +175,7 @@ export default {
     },
     // 滚动到相应的dom节点
     singleLetter (dom) {
-      this.$refs.suggest.scrollToElement(dom, 200, false, false)
+      this.$refs.suggest.scrollToElement(dom, 200, false, -1)
     },
     // 根据滑动距离显示字母牌上的字
     distance (val) {
