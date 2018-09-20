@@ -32,10 +32,8 @@ export default {
 <style lang="stylus" scoped>
 .listbody
   width 100%
-  height calc(100% - 50px)
+  height 100%
   background #f5f5f5
   position absolute
-  top 50px
-  left 0
   z-index 100
 </style>

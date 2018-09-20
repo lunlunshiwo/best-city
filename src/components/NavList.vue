@@ -61,7 +61,6 @@ export default {
   position absolute
   top 50%
   right 0
-  background #eee
   margin-top -230px
   z-index 95
   box-sizing border-box
@@ -71,15 +70,17 @@ export default {
     height 20px
     text-align center
     line-height 20px
-    font-size 18px
-    color #fff
+    font-size 16px
+    color #777
     user-select none
   .flagItem
     width 20px
     height 20px
     text-align center
     line-height 20px
-    font-size 18px
-    color #4395FF
+    font-size 14px
+    color #fff
+    background #4395ff
+    border-radius 10px
     user-select none
 </style>

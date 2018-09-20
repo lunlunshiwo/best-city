@@ -1,9 +1,13 @@
 <template>
   <div class="search-box">
     <div class="ipt-box">
-      <input type="text" class="ipt" placeholder="城市名称/拼音" @keydown="entry()" v-model="searchText" />
+      <form @submit.prevent="formSubmit" action="javascript:return true">
+        <input class='searchInput' type="search" placeholder="城市名/拼音" @input="entry()" v-model="searchText" />
+      </form>
       <div class="icon-box">
         <i class="iconfont icon-sousuo icon"></i>
+      </div>
+      <div class="mask-box">
       </div>
     </div>
   </div>
@@ -22,6 +26,9 @@ export default {
     }
   },
   methods: {
+    formSubmit () {
+      this.$emit('txtdata', this.searchText)
+    },
     // 延时搜索
     entry () {
       if (this.timer) {
@@ -43,41 +50,75 @@ export default {
   }
 }
 </script>
-
-<style lang='stylus' scoped>
-@import '~common/stylus/css.styl'
-.search-box
-  height 50px
-  background $color-background
-  display flex
-  flex-direction column
-  justify-content center
-  align-items center
-  .ipt-box
-    width 80%
-    position relative
-    .ipt
-      display block
-      width 100%
-      height 40px
-      border none
-      outline none
-      border-radius 20px
-      box-sizing border-box
-      padding-left 40px
-      line-height 40px
-      font-size $font-size-l
-    .icon-box
-      position absolute
-      top 0
-      left 0
-      z-index 50
-      width 40px
-      height 40px
-      line-height 40px
-      text-align center
-      .icon
-        font-size 22px
-        font-weight 900
-        color #4395ff
+<style scoped>
+.search-box {
+  height: 100%;
+  width: 50%;
+  margin: 0px auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search-box > .ipt-box {
+  width: 95%;
+  position: relative;
+  height: 30px;
+  border-radius: 15px;
+  background: #eee;
+  padding-top: 6px;
+  box-sizing: border-box;
+}
+.searchInput {
+  display: block;
+  width: 100%;
+  padding-left: 30%;
+  padding-right: 15%;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background: #eee;
+  line-height: 18px;
+  height: 18px;
+}
+input::-webkit-clear {
+  display: none;
+}
+.search-box > .ipt-box > .icon-box {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  margin-left: -20px;
+  z-index: 50;
+  width: 16px;
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.search-box > .ipt-box > .mask-box {
+  position: absolute;
+  top: 0;
+  right: 15%;
+  margin-right: -5px;
+  z-index: 50;
+  width: 16px;
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #eee;
+}
+.search-box > .ipt-box > .icon-box > .icon {
+  font-size: 16px;
+  font-weight: 900;
+  color: #aaa;
+}
 </style>

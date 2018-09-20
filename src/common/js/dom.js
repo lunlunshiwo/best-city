@@ -8,14 +8,7 @@ export function handleDomData (el, name, val) {
 }
 // 获取每一个字母在数组中对应的index
 export function getIndex (arr, query) {
-  let key
-  arr.map((val, index) => {
-    if (val === query) {
-      key = index
-      return false
-    }
-  })
-  return key
+  return arr.findIndex(val => val === query)
 }
 // 计算链接每一部分的高度
 export function getDistance (arr) {

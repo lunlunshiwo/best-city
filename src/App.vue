@@ -1,15 +1,23 @@
 <template>
   <div id="app">
-    <search @txtdata="searchText" :clearText="clearSearch"></search>
-    <transition name="list">
-      <search-list v-if="associationShow" :searchListContent="searchListContent" @changeName="changeCity"></search-list>
-    </transition>
-    <scroll :data="citylist" ref="suggest" :probeType="3" :listenScroll="true" @distance="distance" @scrollStore="scrollStore">
-      <div>
-        <position-box :chooseCity="chooseCity" :orientate="nowCity" :historyCityArr="historyCityArr" @changeCity="changeCity"></position-box>
-        <city-list :citylist="citylist" :elementIndex="elementIndex" @positionCity="changeCity" @singleLetter="singleLetter"></city-list>
-      </div>
-    </scroll>
+    <div class="pattern-box">
+      <span class="mapBack">
+        <i class="iconfont icon-close">X</i>
+      </span>
+      <search @txtdata="searchText" :clearText="clearSearch"></search>
+    </div>
+    <div style="height: calc(100% - 45px);width: 100%;">
+      <transition name="list">
+        <search-list v-if="associationShow" :searchListContent="searchListContent" @changeName="changeCity"></search-list>
+      </transition>
+      <scroll :data="citylist" ref="suggest" :probeType="3" :listenScroll="true" @distance="distance" @scrollStore="scrollStore">
+        <div>
+          <div ref="positionBox"></div>
+          <position-box @changeCity="changeCity"></position-box>
+          <city-list :citylist="citylist" :elementIndex="elementIndex" @positionCity="changeCity" @singleLetter="singleLetter"></city-list>
+        </div>
+      </scroll>
+    </div>
     <nav-list :navList="cityIndexList" @toElement="toElement" :flagText="flagText"></nav-list>
     <mask-box v-if="maskShow" :message="maskMessage" @chooseing="chooseResult"></mask-box>
     <transition name="flag">
@@ -29,6 +37,7 @@ import MaskBox from 'components/MaskBox'
 import SearchList from 'components/SearchList'
 import { getSearchList } from 'common/js/search'
 import { getDistance } from 'common/js/dom'
+import openCityList from 'common/js/cityData'
 
 export default {
   name: 'App',
@@ -38,7 +47,7 @@ export default {
       choiceCity: '', // 点击即将查看的城市
       choiceCityName: '', // 选择查看的城市
       historyCityArr: [], // 查看历史记录
-      citylist: [], // 城市列表
+      citylist: openCityList, // 城市列表
       cityIndexList: ['顶'], // 右边导航栏列表
       maskShow: false, // 弹窗是否弹出
       maskMessage: '', // 弹窗展示的信息
@@ -82,13 +91,10 @@ export default {
     },
     // 获取城市列表
     getCityListApi () {
-      axios.get('http://localhost:1234/').then((res) => {
-        this.citylist = res.data.openCityList
-        this.citylist.map((item) => {
-          this.cityIndexList.push(item[0])
-        })
-        this.getDomHeight()
+      this.citylist.map((item) => {
+        this.cityIndexList.push(item[0])
       })
+      this.getDomHeight()
     },
     // 存到本地
     setHistory (arr) {
@@ -137,7 +143,7 @@ export default {
       }
       // 选择的城市的名字
       this.choiceCity = name
-      this.maskMessage = `你确定要选择${name}么？`
+      this.maskMessage = `是否选择${name}么？`
       this.maskShow = true
     },
     // 关闭确认弹窗
@@ -169,13 +175,13 @@ export default {
     // 点击右边nav，向citylist组件传值
     toElement (text) {
       if (text === '顶') {
-        this.$refs.suggest.scrollTo(0, 0, 200)
+        this.$refs.suggest.scrollToElement(this.$refs.positionBox, 200, false, 0)
       }
       this.elementIndex = text
     },
     // 滚动到相应的dom节点
     singleLetter (dom) {
-      this.$refs.suggest.scrollToElement(dom, 200, false, -1)
+      this.$refs.suggest.scrollToElement(dom, 200, false, 30)
     },
     // 根据滑动距离显示字母牌上的字
     distance (val) {
@@ -189,7 +195,7 @@ export default {
     // 计算每一部分到顶端的距离
     getDomHeight () {
       let arr = getDistance(this.citylist)
-      arr.unshift(250) // 向开始添加顶端的250px的距离
+      arr.unshift(95) // 向开始添加顶端的250px的距离
       let i = 0
       arr.map((val) => {
         i = i + val
@@ -220,24 +226,41 @@ export default {
 
 <style lang="stylus">
 @import 'common/stylus/index.styl'
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  color #2c3e50
-  .nowFlag
-    width 50px
-    height 50px
-    background #4395ff
-    color #fff
-    font-size 30px
-    font-weight 900
-    line-height 50px
-    text-align center
-    position absolute
-    top 60px
-    left 50%
-    margin-left -25px
+html
+  height 100%
+  body
+    height 100%
+    #app
+      font-family 'Avenir', Helvetica, Arial, sans-serif
+      -webkit-font-smoothing antialiased
+      -moz-osx-font-smoothing grayscale
+      color #2c3e50
+      height 100%
+      font-size 12px
+      .pattern-box
+        width 100%
+        height 45px
+        position relative
+        background #fff
+        .mapBack
+          display block
+          width 30px
+          line-height 45px
+          margin-left 8px
+          position absolute
+      .nowFlag
+        width 50px
+        height 50px
+        background #4395ff
+        color #fff
+        font-size 30px
+        font-weight 900
+        line-height 50px
+        text-align center
+        position absolute
+        top 60px
+        left 50%
+        margin-left -25px
 .list-enter-active, .list-leave-active
   transition all 0.5s
 .list-enter

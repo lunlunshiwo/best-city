@@ -90,9 +90,8 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .scroll
-  position fixed
-  top 50px
-  bottom 0
+  height 100%
   width 100%
   overflow hidden
+  background #eee
 </style>
