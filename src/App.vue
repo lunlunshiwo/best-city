@@ -60,6 +60,16 @@ export default {
       flagText: '顶' // 字母牌显示的字
     }
   },
+  props: {
+    location: {
+      type: Object,
+      default: () => {
+        return {
+          name: '北京'
+        }
+      }
+    }
+  },
   created () {
     this.getNowCity()
     this.getCityListApi()
