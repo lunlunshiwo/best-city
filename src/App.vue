@@ -27,17 +27,17 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Search from 'components/Search'
-import Scroll from 'base/Scroll.vue'
-import PositionBox from 'components/PositionBox'
-import CityList from 'components/CityList'
-import NavList from 'components/NavList'
-import MaskBox from 'components/MaskBox'
-import SearchList from 'components/SearchList'
-import { getSearchList } from 'common/js/search'
-import { getDistance } from 'common/js/dom'
-import openCityList from 'common/js/cityData'
+import axios from 'axios';
+import Search from 'components/Search';
+import Scroll from 'base/Scroll.vue';
+import PositionBox from 'components/PositionBox';
+import CityList from 'components/CityList';
+import NavList from 'components/NavList';
+import MaskBox from 'components/MaskBox';
+import SearchList from 'components/SearchList';
+import { getSearchList } from 'common/js/search';
+import { getDistance } from 'common/js/dom';
+import openCityList from 'common/js/cityData';
 
 export default {
   name: 'App',
@@ -52,7 +52,7 @@ export default {
       default: () => {
         return {
           name: '北京'
-        }
+        };
       }
     }
   },
@@ -73,158 +73,165 @@ export default {
       arrHeight: [], // 高度数组
       flag: false, // 字母牌是否显示
       flagText: '顶' // 字母牌显示的字
-    }
+    };
   },
   created () {
-    this.getNowCity()
-    this.getCityListApi()
+    this.getNowCity();
+    this.getCityListApi();
   },
   computed: {
     // 如果没有选择地址，默认切换到定位所在地址
     chooseCity () {
-      return this.choiceCityName ? this.choiceCityName : this.nowCity
+      return this.choiceCityName ? this.choiceCityName : this.nowCity;
     }
   },
   methods: {
     // 定位当前所在城市
     getNowCity () {
-      this.getCity()
-      this.getHistory()
+      this.getCity();
+      this.getHistory();
       axios.get('http://localhost:1234/nowcity').then((res) => {
-        this.nowCity = res.data.city
+        this.nowCity = res.data.city;
         if (!this.choiceCity && !this.choiceCityName) {
-          this.choiceCity = this.nowCity
-          this.choiceCityName = this.nowCity
+          this.choiceCity = this.nowCity;
+          this.choiceCityName = this.nowCity;
         }
       }, () => {
-        this.nowCity = '北京'
+        this.nowCity = '北京';
         if (!this.choiceCity && !this.choiceCityName) {
-          this.choiceCity = this.nowCity
-          this.choiceCityName = this.nowCity
+          this.choiceCity = this.nowCity;
+          this.choiceCityName = this.nowCity;
         }
-      })
+      });
     },
     // 获取城市列表
     getCityListApi () {
       this.citylist.map((item) => {
-        this.cityIndexList.push(item[0])
-      })
-      this.getDomHeight()
+        this.cityIndexList.push(item[0]);
+      });
+      this.getDomHeight();
     },
     // 存到本地
     setHistory (arr) {
-      localStorage.setItem('historyCityArr', arr)
+      localStorage.setItem('historyCityArr', arr);
     },
     // 从本地取
     getHistory () {
-      let history = localStorage.getItem('historyCityArr')
+      let history = localStorage.getItem('historyCityArr');
       if (!history) {
-        this.historyCityArr = []
+        this.historyCityArr = [];
       } else {
-        this.historyCityArr = history.split(',')
+        this.historyCityArr = history.split(',');
       }
     },
     // 存到本地,正在查看的城市
     setCity (name) {
-      localStorage.setItem('seeCity', name)
+      localStorage.setItem('seeCity', name);
     },
     // 从本地取，,正在查看的城市
     getCity () {
-      let name = localStorage.getItem('seeCity')
+      let name = localStorage.getItem('seeCity');
       if (!name) {
-        this.choiceCity = ''
-        this.choiceCityName = ''
+        this.choiceCity = '';
+        this.choiceCityName = '';
       } else {
-        this.choiceCity = name
-        this.choiceCityName = name
+        this.choiceCity = name;
+        this.choiceCityName = name;
       }
     },
     // 搜索框内容
     searchText (text) {
       if (text.length === 0) {
-        this.associationShow = false
-        return false
+        this.associationShow = false;
+        return false;
       }
-      this.clearSearch = false
-      this.associationShow = true
-      this.searchListContent = getSearchList(text, this.citylist, this.canSearchSpell)
+      this.clearSearch = false;
+      this.associationShow = true;
+      this.searchListContent = getSearchList(text, this.citylist, this.canSearchSpell);
     },
     // 点击城市名字，弹出弹窗确认
     changeCity (name) {
       if (this.choiceCityName === name) {
-        this.associationShow = false // 关闭搜索框（在搜索状态下）
-        this.clearSearch = true // 清除输入框的字（在搜索状态下）
-        return false
+        // 关闭搜索框（在搜索状态下）
+        this.associationShow = false;
+        // 清除输入框的字（在搜索状态下）
+        this.clearSearch = true;
+        return false;
       }
       // 选择的城市的名字
-      this.choiceCity = name
-      this.maskMessage = `是否选择${name}么？`
-      this.maskShow = true
+      this.choiceCity = name;
+      this.maskMessage = `是否选择${name}么？`;
+      this.maskShow = true;
     },
     // 关闭确认弹窗
     maskClose () {
-      this.maskShow = false
+      this.maskShow = false;
     },
     // 是否确认切换定位
     chooseResult (res) {
       if (!res) {
-        this.maskClose() // 不切换，仅关闭弹窗
+        // 不切换，仅关闭弹窗
+        this.maskClose();
       } else {
-        this.choiceCityName = this.choiceCity
-        this.local()
-        this.associationShow = false // 关闭搜索框（在搜索状态下）
-        this.clearSearch = true // 清除输入框的字（在搜索状态下）
+        this.choiceCityName = this.choiceCity;
+        // this.local();
+        // 关闭搜索框（在搜索状态下）
+        this.associationShow = false;
+        // 清除输入框的字（在搜索状态下）
+        this.clearSearch = true;
         // 当确认后滚动到顶部
-        this.$refs.suggest.scrollTo(0, 0, 200)
-        this.maskClose()
+        this.$refs.suggest.scrollTo(0, 0, 200);
+        this.maskClose();
       }
     },
     // 根据定位确定加缓存
     local () {
       if (this.choiceCityName !== this.nowCity) {
-        this.historyCityArr.unshift(this.choiceCityName)
+        this.historyCityArr.unshift(this.choiceCityName);
       }
-      this.historyCityArr = this.historyCityArr.slice(0, 2)
-      this.setCity(this.choiceCityName)
+      this.historyCityArr = this.historyCityArr.slice(0, 2);
+      this.setCity(this.choiceCityName);
     },
     // 点击右边nav，向citylist组件传值
     toElement (text) {
       if (text === '顶') {
-        this.$refs.suggest.scrollToElement(this.$refs.positionBox, 200, false, 0)
+        this.$refs.suggest.scrollToElement(this.$refs.positionBox, 200, false, 0);
       }
-      this.elementIndex = text
+      this.elementIndex = text;
     },
     // 滚动到相应的dom节点
     singleLetter (dom) {
-      this.$refs.suggest.scrollToElement(dom, 200, false, 30)
+      this.$refs.suggest.scrollToElement(dom, 200, false, 30);
     },
     // 根据滑动距离显示字母牌上的字
     distance (val) {
+      this.elementIndex = '';
       for (let i = 0, len = this.arrHeight.length; i < len; i++) {
         if (val < this.arrHeight[i]) {
-          this.flagText = this.cityIndexList[i]
-          return false
+          this.flagText = this.cityIndexList[i];
+          return false;
         }
       }
     },
     // 计算每一部分到顶端的距离
     getDomHeight () {
-      let arr = getDistance(this.citylist)
-      arr.unshift(95) // 向开始添加顶端的250px的距离
-      let i = 0
+      let arr = getDistance(this.citylist);
+      // 向开始添加顶端的95px的距离,作为当前定位的高度
+      arr.unshift(95);
+      let i = 0;
       arr.map((val) => {
-        i = i + val
-        this.arrHeight.push(i)
-      })
+        i = i + val;
+        this.arrHeight.push(i);
+      });
     },
     // 是否显示字母牌
     scrollStore (val) {
-      this.flag = val
+      this.flag = val;
     }
   },
   watch: {
     historyCityArr (val) {
-      this.setHistory(val)
+      this.setHistory(val);
     }
   },
   components: {
@@ -236,7 +243,7 @@ export default {
     'mask-box': MaskBox,
     'search-list': SearchList
   }
-}
+};
 </script>
 
 <style lang="stylus">

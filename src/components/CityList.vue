@@ -17,18 +17,17 @@ export default {
   },
   methods: {
     changeCity (name) {
-      this.$emit('positionCity', name)
+      this.$emit('positionCity', name);
     }
   },
   watch: {
     elementIndex (val) {
-      if (val === '顶') {
-        return false
-      }
-      this.$emit('singleLetter', this.$refs[val][0])
+      if (!val) return;
+      if (val === '顶') return;
+      this.$emit('singleLetter', this.$refs[val][0]);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

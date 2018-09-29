@@ -12,10 +12,10 @@ export default {
   },
   methods: {
     changeCity (name) {
-      this.$emit('changeName', name)
+      this.$emit('changeName', name);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

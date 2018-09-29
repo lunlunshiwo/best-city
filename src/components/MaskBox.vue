@@ -26,13 +26,13 @@ export default {
   },
   methods: {
     chooseTrue () {
-      this.$emit('chooseing', true)
+      this.$emit('chooseing', true);
     },
     chooseFalse () {
-      this.$emit('chooseing', false)
+      this.$emit('chooseing', false);
     }
   }
-}
+};
 </script><style lang="stylus" scoped>
 .mask-box
   width 100%

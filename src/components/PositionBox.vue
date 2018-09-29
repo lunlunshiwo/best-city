@@ -22,16 +22,16 @@ export default {
         name: '北京',
         id: 123
       }
-    }
+    };
   },
   created () {
   },
   methods: {
     changeCity (name) {
-      this.$emit('changeCity', name)
+      this.$emit('changeCity', name);
     }
   }
-}
+};
 </script>
 <style scoped>
 .position-box {
