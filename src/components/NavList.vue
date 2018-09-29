@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { handleDomData, getIndex } from 'common/js/dom'
+import { handleDomData, getIndex } from 'common/js/dom';
 export default {
   name: 'NavList',
   props: {
@@ -24,33 +24,34 @@ export default {
         end: 0,
         endIndex: ''
       }
-    }
+    };
   },
   methods: {
     // 根据不同的状况赋值不同的样式
     navClass (item) {
-      return this.flagText === item ? 'flagItem' : 'navItem'
+      return this.flagText === item ? 'flagItem' : 'navItem';
     },
     // 向上触发scroll滚动事件
     scrollToElement (item) {
-      this.$emit('toElement', item)
+      console.log(item);
+      this.$emit('toElement', item);
     },
     // 触摸开始，并向上触发滚动事件
     start (e) {
-      let item = handleDomData(e.target, 'data-name')
-      this.touch.start = e.touches[0].pageY
-      this.touch.startIndex = getIndex(this.navList, item)
-      this.scrollToElement(item)
+      let item = handleDomData(e.target, 'data-name');
+      this.touch.start = e.touches[0].pageY;
+      this.touch.startIndex = getIndex(this.navList, item);
+      this.scrollToElement(item);
     },
     // 触摸过程中，根据距离变化应计算滚动到的位置
     move (e) {
-      this.touch.end = e.touches[0].pageY
-      let distance = this.touch.end - this.touch.start
-      this.touch.endIndex = Math.min(Math.max(this.touch.startIndex + Math.floor((distance + 10) / 20), 0), 22)
-      this.scrollToElement(this.navList[this.touch.endIndex])
+      this.touch.end = e.touches[0].pageY;
+      let distance = this.touch.end - this.touch.start;
+      this.touch.endIndex = Math.min(Math.max(this.touch.startIndex + Math.floor((distance + 10) / 20), 0), 22);
+      this.scrollToElement(this.navList[this.touch.endIndex]);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

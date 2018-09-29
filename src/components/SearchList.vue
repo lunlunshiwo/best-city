@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Scroll from 'base/Scroll.vue'
-import CityItem from 'base/CityItem.vue'
+import Scroll from 'base/Scroll.vue';
+import CityItem from 'base/CityItem.vue';
 export default {
   name: 'SearchList',
   props: {
@@ -19,14 +19,14 @@ export default {
   methods: {
     // 点击列表触发改变定位的事件
     changeCity (name) {
-      this.$emit('changeName', name)
+      this.$emit('changeName', name);
     }
   },
   components: {
     'scroll': Scroll,
     'city-item': CityItem
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

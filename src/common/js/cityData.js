@@ -9413,5 +9413,5 @@ const openCityList = [
       }
     ]
   ]
-]
-export default openCityList
+];
+export default openCityList;
