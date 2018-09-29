@@ -41,6 +41,21 @@ import openCityList from 'common/js/cityData'
 
 export default {
   name: 'App',
+  props: {
+    // 是否可以使用拼音（若没拼音这个属性需要设置为false）
+    canSearchSpell: {
+      type: Boolean,
+      default: true
+    },
+    location: {
+      type: Object,
+      default: () => {
+        return {
+          name: '北京'
+        }
+      }
+    }
+  },
   data () {
     return {
       nowCity: '', // 当前所在的城市
@@ -58,16 +73,6 @@ export default {
       arrHeight: [], // 高度数组
       flag: false, // 字母牌是否显示
       flagText: '顶' // 字母牌显示的字
-    }
-  },
-  props: {
-    location: {
-      type: Object,
-      default: () => {
-        return {
-          name: '北京'
-        }
-      }
     }
   },
   created () {
@@ -142,7 +147,7 @@ export default {
       }
       this.clearSearch = false
       this.associationShow = true
-      this.searchListContent = getSearchList(text, this.citylist)
+      this.searchListContent = getSearchList(text, this.citylist, this.canSearchSpell)
     },
     // 点击城市名字，弹出弹窗确认
     changeCity (name) {
