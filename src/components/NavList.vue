@@ -1,7 +1,7 @@
 <template>
   <div class="navbody">
-    <div class="navList" @touchstart.stop.prevent="start" @touchmove.stop.prevent="move">
-      <div :class="navClass(item)" :data-name="item" v-for="item in navList" :key="item">
+    <div class="navList" @touchstart="start" @touchmove="move">
+      <div :class="navClass(item)" :data-name="item" @click.stop.prevent="clickNav(item)"  v-for="item in navList" :key="item">
         {{item}}
       </div>
     </div>
@@ -33,15 +33,17 @@ export default {
     },
     // 向上触发scroll滚动事件
     scrollToElement (item) {
-      console.log(item);
       this.$emit('toElement', item);
+    },
+    // 点击
+    clickNav (item) {
+      this.scrollToElement(item);
     },
     // 触摸开始，并向上触发滚动事件
     start (e) {
       let item = handleDomData(e.target, 'data-name');
       this.touch.start = e.touches[0].pageY;
       this.touch.startIndex = getIndex(this.navList, item);
-      this.scrollToElement(item);
     },
     // 触摸过程中，根据距离变化应计算滚动到的位置
     move (e) {
@@ -71,7 +73,7 @@ export default {
     height 20px
     text-align center
     line-height 20px
-    font-size 16px
+    font-size 14px
     color #777
     user-select none
   .flagItem

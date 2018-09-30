@@ -2,9 +2,9 @@
   <div id="app">
     <div class="pattern-box">
       <span class="mapBack">
-        <i class="iconfont icon-close">X</i>
+        <i class="iconfont icon-guanbi"></i>
       </span>
-      <search @txtdata="searchText" :clearText="clearSearch"></search>
+      <search @txtdata="searchText" :clearText="clearSearch" :canSearchSpell="canSearchSpell"></search>
     </div>
     <div style="height: calc(100% - 45px);width: 100%;">
       <transition name="list">
@@ -13,7 +13,7 @@
       <scroll :data="citylist" ref="suggest" :probeType="3" :listenScroll="true" @distance="distance" @scrollStore="scrollStore">
         <div>
           <div ref="positionBox"></div>
-          <position-box @changeCity="changeCity"></position-box>
+          <position-box :needHotCity="needHotCity" @changeCity="changeCity"></position-box>
           <city-list :citylist="citylist" :elementIndex="elementIndex" @positionCity="changeCity" @singleLetter="singleLetter"></city-list>
         </div>
       </scroll>
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Search from 'components/Search';
 import Scroll from 'base/Scroll.vue';
 import PositionBox from 'components/PositionBox';
@@ -42,27 +41,39 @@ import openCityList from 'common/js/cityData';
 export default {
   name: 'App',
   props: {
+    // 定位
+    nowCity: {
+      type: String,
+      default: '北京'
+    },
+    // 是否需要热门城市
+    needHotCity: {
+      type: Boolean,
+      default: true
+    },
+    // 城市列表
+    citylist: {
+      type: Array,
+      default: () => {
+        return openCityList;
+      }
+    },
+    // 是否显示字母牌
+    isShowCard: {
+      type: Boolean,
+      default: true
+    },
     // 是否可以使用拼音（若没拼音这个属性需要设置为false）
     canSearchSpell: {
       type: Boolean,
       default: true
-    },
-    location: {
-      type: Object,
-      default: () => {
-        return {
-          name: '北京'
-        };
-      }
     }
   },
   data () {
     return {
-      nowCity: '', // 当前所在的城市
       choiceCity: '', // 点击即将查看的城市
       choiceCityName: '', // 选择查看的城市
       historyCityArr: [], // 查看历史记录
-      citylist: openCityList, // 城市列表
       cityIndexList: ['顶'], // 右边导航栏列表
       maskShow: false, // 弹窗是否弹出
       maskMessage: '', // 弹窗展示的信息
@@ -88,21 +99,10 @@ export default {
   methods: {
     // 定位当前所在城市
     getNowCity () {
+      this.choiceCity = this.nowCity;
+      this.choiceCityName = this.nowCity;
       this.getCity();
       this.getHistory();
-      axios.get('http://localhost:1234/nowcity').then((res) => {
-        this.nowCity = res.data.city;
-        if (!this.choiceCity && !this.choiceCityName) {
-          this.choiceCity = this.nowCity;
-          this.choiceCityName = this.nowCity;
-        }
-      }, () => {
-        this.nowCity = '北京';
-        if (!this.choiceCity && !this.choiceCityName) {
-          this.choiceCity = this.nowCity;
-          this.choiceCityName = this.nowCity;
-        }
-      });
     },
     // 获取城市列表
     getCityListApi () {
@@ -128,7 +128,7 @@ export default {
     setCity (name) {
       localStorage.setItem('seeCity', name);
     },
-    // 从本地取，,正在查看的城市
+    // 从本地取,正在查看的城市
     getCity () {
       let name = localStorage.getItem('seeCity');
       if (!name) {
@@ -217,7 +217,8 @@ export default {
     getDomHeight () {
       let arr = getDistance(this.citylist);
       // 向开始添加顶端的95px的距离,作为当前定位的高度
-      arr.unshift(95);
+      const positionBoxHeight = this.needHotCity ? 200 : 85;
+      arr.unshift(positionBoxHeight);
       let i = 0;
       arr.map((val) => {
         i = i + val;
@@ -226,7 +227,7 @@ export default {
     },
     // 是否显示字母牌
     scrollStore (val) {
-      this.flag = val;
+      this.flag = val && this.isShowCard;
     }
   },
   watch: {
@@ -266,7 +267,8 @@ html
         background #fff
         .mapBack
           display block
-          width 30px
+          width 40px
+          text-align center
           line-height 45px
           margin-left 8px
           position absolute

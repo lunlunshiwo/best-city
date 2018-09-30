@@ -1,0 +1,90 @@
+.vue-1px-b {
+    height: auto;
+    background-image: linear-gradient(top, transparent 50%, #e3e3e3 50%);
+    background-image: -webkit-linear-gradient(top, transparent 50%, #e3e3e3 50%);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+}
+
+.vue-1px-t {
+    height: auto;
+    background-image: linear-gradient(top, transparent 50%, #e3e3e3 50%);
+    background-image: -webkit-linear-gradient(top, transparent 50%, #e3e3e3 50%);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+}
+
+.vue-1px-l {
+    height: auto;
+    background-image: linear-gradient(left, transparent 50%, #e3e3e3 50%);
+    background-image: -webkit-linear-gradient(left, transparent 50%, #e3e3e3 50%);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 1px 100%;
+}
+
+.vue-1px-r {
+    height: auto;
+    background-image: linear-gradient(right, transparent 50%, #e3e3e3 50%);
+    background-image: -webkit-linear-gradient(right, transparent 50%, #e3e3e3 50%);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 1px 100%;
+}
+
+.vue-1px-tb,
+.vue-1px {
+    position: relative !important;
+}
+
+.vue-1px:before {
+    z-index: 0;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    border: 1px solid #e3e3e3;
+    color: #e3e3e3;
+    height: 200%;
+    transform-origin: left top;
+    -webkit-transform-origin: left top;
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+}
+
+.vue-1px-tb:before {
+    z-index: 0;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #e3e3e3;
+    background: #fff;
+    color: #e3e3e3;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    transform: scaleY(0.5);
+    -webkit-transform: scaleY(0.5);
+}
+
+.vue-1px-tb:after {
+    z-index: 0;
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #e3e3e3;
+    background: #fff;
+    color: #e3e3e3;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    transform: scaleY(0.5);
+    -webkit-transform: scaleY(0.5);
+}

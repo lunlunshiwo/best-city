@@ -2,13 +2,13 @@
   <div class="search-box">
     <div class="ipt-box">
       <form @submit.prevent="formSubmit" action="javascript:return true">
-        <input class='searchInput' type="search" placeholder="城市名/拼音" @input="entry()" v-model="searchText" />
+        <input class='searchInput' type="search" :placeholder="placeholder" @input="entry()" v-model="searchText" />
       </form>
-      <div class="icon-box">
-        <i class="iconfont icon-sousuo icon"></i>
-      </div>
-      <div class="mask-box">
-      </div>
+        <div class="icon-box">
+          <i class="iconfont icon-sousuo icon"></i>
+        </div>
+        <div class="mask-box">
+        </div>
     </div>
   </div>
 </template>
@@ -17,13 +17,22 @@
 export default {
   name: 'Search',
   props: {
-    clearText: Boolean
+    clearText: Boolean,
+    canSearchSpell: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
       searchText: '',
       timer: {}
     };
+  },
+  computed: {
+    placeholder () {
+      return this.canSearchSpell ? '城市名称/拼音' : '城市名称';
+    }
   },
   methods: {
     formSubmit () {
