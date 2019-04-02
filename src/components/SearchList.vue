@@ -3,31 +3,34 @@
     <scroll :data="searchListContent">
       <div>
         <city-item
-          :searchListContent="searchListContent"
+          :search-list-content="searchListContent"
           @changeName="changeCity"
-        ></city-item>
+        />
       </div>
     </scroll>
   </div>
 </template>
 
 <script>
-import Scroll from 'base/Scroll.vue';
-import CityItem from 'base/CityItem.vue';
+import Scroll from '../base/Scroll.vue';
+import CityItem from '../base/CityItem.vue';
 export default {
   name: 'SearchList',
+  components: {
+    'scroll': Scroll,
+    'city-item': CityItem
+  },
   props: {
-    searchListContent: Array
+    searchListContent: {
+      type: Array,
+      default: () => []
+    }
   },
   methods: {
     // 点击列表触发改变定位的事件
     changeCity(name) {
       this.$emit('changeName', name);
     }
-  },
-  components: {
-    'scroll': Scroll,
-    'city-item': CityItem
   }
 };
 </script>

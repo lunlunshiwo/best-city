@@ -6,24 +6,30 @@
       @touchmove.stop.prevent="move"
     >
       <div
-        :class="navClass(item)"
-        :data-name="item"
         v-for="item in navList"
         :key="item"
+        :class="navClass(item)"
+        :data-name="item"
       >
-        {{item}}
+        {{ item }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { handleDomData, getIndex } from 'common/js/dom';
+import { handleDomData, getIndex } from '../common/js/dom';
 export default {
   name: 'NavList',
   props: {
-    navList: Array,
-    flagText: String
+    navList: {
+      type: Array,
+      default: () => []
+    },
+    flagText: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

@@ -2,22 +2,21 @@
   <div class="search-box">
     <div class="ipt-box">
       <form
-        @submit.prevent="formSubmit"
         action="javascript:return true"
+        @submit.prevent="formSubmit"
       >
         <input
-          class='searchInput'
+          v-model="searchText"
+          class="searchInput"
           type="search"
           placeholder="城市名/拼音"
           @input="entry()"
-          v-model="searchText"
-        />
+        >
       </form>
       <div class="icon-box">
-        <i class="iconfont icon-sousuo icon"></i>
+        <i class="iconfont icon-sousuo icon" />
       </div>
-      <div class="mask-box">
-      </div>
+      <div class="mask-box" />
     </div>
   </div>
 </template>
@@ -34,6 +33,15 @@ export default {
       timer: {}
     };
   },
+  watch: {
+    // 清除搜索内容
+    clearText(val) {
+      if (val) {
+        this.searchText = '';
+        this.entry();
+      }
+    }
+  },
   methods: {
     formSubmit() {
       this.$emit('txtdata', this.searchText);
@@ -46,15 +54,6 @@ export default {
       this.timer = setTimeout(() => {
         this.$emit('txtdata', this.searchText);
       }, 300);
-    }
-  },
-  watch: {
-    // 清除搜索内容
-    clearText(val) {
-      if (val) {
-        this.searchText = '';
-        this.entry();
-      }
     }
   }
 };

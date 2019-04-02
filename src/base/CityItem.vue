@@ -4,7 +4,7 @@
       class="city-item"
       v-for="city in searchListContent"
       :key="city.id"
-      @click="changeCity(city.name)"
+      @click="changeCity(city)"
     >{{city.name}}</p>
   </div>
 </template>
@@ -16,8 +16,8 @@ export default {
     searchListContent: Array
   },
   methods: {
-    changeCity(name) {
-      this.$emit('changeName', name);
+    changeCity(city) {
+      this.$emit('changeName', city);
     }
   }
 };

@@ -1,9 +1,9 @@
 <template>
   <div class="mask-box">
-    <div class="mask-body"></div>
+    <div class="mask-body" />
     <div class="btn-box">
       <div class="message">
-        <p>是否选择{{message}}</p>
+        <p>是否选择{{ message }}</p>
       </div>
       <div
         class="btn-left"

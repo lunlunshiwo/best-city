@@ -4,14 +4,14 @@
       <p>当前定位</p>
       <div class="citybox">
         <button
-          @click="changeCity(nowCity)"
           style="text-align:center;"
+          @click="changeCity(nowCity)"
         >
           <i
             class="iconfont icon-dingwei icon"
             style="margin:0px auto;"
           >
-            <a style="color:#666;font-size: 13px;">{{nowCity.name}}</a>
+            <a style="color:#666;font-size: 13px;">{{ nowCity.name }}</a>
           </i>
         </button>
       </div>
@@ -33,8 +33,8 @@ export default {
   created() {
   },
   methods: {
-    changeCity(name) {
-      this.$emit('changeCity', name);
+    changeCity(city) {
+      this.$emit('changeCity', city);
     }
   }
 };

@@ -5,73 +5,82 @@
         <i class="iconfont icon-close">X</i>
       </span>
       <search
+        :clear-text="clearSearch"
         @txtdata="searchText"
-        :clearText="clearSearch"
-      ></search>
+      />
     </div>
     <div style="height: calc(100% - 45px);width: 100%;">
       <transition name="list">
         <search-list
           v-if="associationShow"
-          :searchListContent="searchListContent"
+          :search-list-content="searchListContent"
           @changeName="changeCity"
-        ></search-list>
+        />
       </transition>
       <scroll
-        :data="citylist"
         ref="suggest"
-        :probeType="3"
-        :listenScroll="true"
+        :data="citylist"
+        :probe-type="3"
+        :listen-scroll="true"
         @distance="distance"
         @scrollStore="scrollStore"
       >
         <div>
-          <div ref="positionBox"></div>
-          <position-box @changeCity="changeCity"></position-box>
+          <div ref="positionBox" />
+          <position-box @changeCity="changeCity" />
           <city-list
             :citylist="citylist"
-            :elementIndex="elementIndex"
+            :element-index="elementIndex"
             @positionCity="changeCity"
             @singleLetter="singleLetter"
-          ></city-list>
+          />
         </div>
       </scroll>
     </div>
     <nav-list
-      :navList="cityIndexList"
+      :nav-list="cityIndexList"
+      :flag-text="flagText"
       @toElement="toElement"
-      :flagText="flagText"
-    ></nav-list>
+    />
     <mask-box
       v-if="maskShow"
       :message="maskMessage"
       @chooseing="chooseResult"
-    ></mask-box>
+    />
     <transition name="flag">
       <div
-        class="nowFlag"
         v-if="flag"
-      >{{flagText}}</div>
+        class="nowFlag"
+      >{{ flagText }}</div>
     </transition>
   </div>
 </template>
 
 <script>
-import Search from 'components/Search';
-import Scroll from 'base/Scroll.vue';
-import PositionBox from 'components/PositionBox';
-import CityList from 'components/CityList';
-import NavList from 'components/NavList';
-import MaskBox from 'components/MaskBox';
-import SearchList from 'components/SearchList';
-import { getSearchList } from 'common/js/search';
-import { getDistance } from 'common/js/dom';
-import openCityList from 'common/js/cityData';
+import Search from './components/Search';
+import Scroll from './base/Scroll.vue';
+import PositionBox from './components/PositionBox';
+import CityList from '././components/CityList';
+import NavList from './components/NavList';
+import MaskBox from './components/MaskBox';
+import SearchList from './components/SearchList';
+import { getSearchList } from './common/js/search';
+import { getDistance } from './common/js/dom';
+import openCityList from './common/js/cityData';
 
 export default {
   name: 'App',
+  components: {
+    'search': Search,
+    'scroll': Scroll,
+    'position-box': PositionBox,
+    'nav-list': NavList,
+    'city-list': CityList,
+    'mask-box': MaskBox,
+    'search-list': SearchList
+  },
   props: {
-    // 是否可以使用拼音（若没拼音这个属性需要设置为false）
+    // 是否可以使用拼音（若没拼音这个属性需要设置为false
     canSearchSpell: {
       type: Boolean,
       default: true
@@ -85,7 +94,7 @@ export default {
       }
     }
   },
-  data() {
+  data: () => {
     return {
       nowCity: '', // 当前所在的城市
       choiceCityName: '', // 选择查看的城市
@@ -102,15 +111,15 @@ export default {
       flagText: '顶' // 字母牌显示的字
     };
   },
-  created() {
-    this.getNowCity();
-    this.getCityListApi();
-  },
   computed: {
     // 如果没有选择地址，默认切换到定位所在地址
     chooseCity() {
       return this.choiceCityName ? this.choiceCityName : this.nowCity;
     }
+  },
+  created() {
+    this.getNowCity();
+    this.getCityListApi();
   },
   methods: {
     // 定位当前所在城市
@@ -152,8 +161,8 @@ export default {
       this.searchListContent = getSearchList(text, this.citylist, this.canSearchSpell);
     },
     // 点击城市名字，弹出弹窗确认
-    changeCity(name) {
-      if (this.choiceCityName === name) {
+    changeCity(city) {
+      if (this.choiceCityName === city.name) {
         // 关闭搜索框（在搜索状态下）
         this.associationShow = false;
         // 清除输入框的字（在搜索状态下）
@@ -161,7 +170,7 @@ export default {
         return false;
       }
       // 选择的城市的名字
-      this.maskMessage = name;
+      this.maskMessage = city.name;
       this.maskShow = true;
     },
     // 关闭确认弹窗
@@ -220,15 +229,6 @@ export default {
     scrollStore(val) {
       this.flag = val;
     }
-  },
-  components: {
-    'search': Search,
-    'scroll': Scroll,
-    'position-box': PositionBox,
-    'nav-list': NavList,
-    'city-list': CityList,
-    'mask-box': MaskBox,
-    'search-list': SearchList
   }
 };
 </script>
@@ -236,9 +236,7 @@ export default {
 <style lang="stylus">
 @import 'common/stylus/index.styl'
 html
-  height 100%
   body
-    height 100%
     #app
       font-family 'Avenir', Helvetica, Arial, sans-serif
       -webkit-font-smoothing antialiased

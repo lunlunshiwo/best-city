@@ -6,15 +6,15 @@
       :dataNum="citys[1].length"
     >
       <p
-        class="city-title"
         :ref="citys[0]"
-      >{{citys[0]}}</p>
+        class="city-title"
+      >{{ citys[0] }}</p>
       <p
-        class="city-item"
         v-for="city in citys[1]"
         :key="city.id"
-        @click="changeCity(city.name)"
-      >{{city.name}}</p>
+        class="city-item"
+        @click="changeCity(city)"
+      >{{ city.name }}</p>
     </div>
   </div>
 </template>
@@ -23,13 +23,13 @@
 export default {
   name: 'CityList',
   props: {
-    citylist: Array,
-    cityIndexList: Array,
-    elementIndex: String
-  },
-  methods: {
-    changeCity(name) {
-      this.$emit('positionCity', name);
+    'citylist': {
+      type: Array,
+      default: () => []
+    },
+    elementIndex: {
+      type: String,
+      default: ''
     }
   },
   watch: {
@@ -37,6 +37,11 @@ export default {
       if (!val) return;
       if (val === '顶') return;
       this.$emit('singleLetter', this.$refs[val][0]);
+    }
+  },
+  methods: {
+    changeCity(city) {
+      this.$emit('positionCity', city);
     }
   }
 };
