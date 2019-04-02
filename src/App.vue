@@ -4,30 +4,59 @@
       <span class="mapBack">
         <i class="iconfont icon-close">X</i>
       </span>
-      <search @txtdata="searchText" :clearText="clearSearch"></search>
+      <search
+        @txtdata="searchText"
+        :clearText="clearSearch"
+      ></search>
     </div>
     <div style="height: calc(100% - 45px);width: 100%;">
       <transition name="list">
-        <search-list v-if="associationShow" :searchListContent="searchListContent" @changeName="changeCity"></search-list>
+        <search-list
+          v-if="associationShow"
+          :searchListContent="searchListContent"
+          @changeName="changeCity"
+        ></search-list>
       </transition>
-      <scroll :data="citylist" ref="suggest" :probeType="3" :listenScroll="true" @distance="distance" @scrollStore="scrollStore">
+      <scroll
+        :data="citylist"
+        ref="suggest"
+        :probeType="3"
+        :listenScroll="true"
+        @distance="distance"
+        @scrollStore="scrollStore"
+      >
         <div>
           <div ref="positionBox"></div>
           <position-box @changeCity="changeCity"></position-box>
-          <city-list :citylist="citylist" :elementIndex="elementIndex" @positionCity="changeCity" @singleLetter="singleLetter"></city-list>
+          <city-list
+            :citylist="citylist"
+            :elementIndex="elementIndex"
+            @positionCity="changeCity"
+            @singleLetter="singleLetter"
+          ></city-list>
         </div>
       </scroll>
     </div>
-    <nav-list :navList="cityIndexList" @toElement="toElement" :flagText="flagText"></nav-list>
-    <mask-box v-if="maskShow" :message="maskMessage" @chooseing="chooseResult"></mask-box>
+    <nav-list
+      :navList="cityIndexList"
+      @toElement="toElement"
+      :flagText="flagText"
+    ></nav-list>
+    <mask-box
+      v-if="maskShow"
+      :message="maskMessage"
+      @chooseing="chooseResult"
+    ></mask-box>
     <transition name="flag">
-      <div class="nowFlag" v-if="flag">{{flagText}}</div>
+      <div
+        class="nowFlag"
+        v-if="flag"
+      >{{flagText}}</div>
     </transition>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import Search from 'components/Search';
 import Scroll from 'base/Scroll.vue';
 import PositionBox from 'components/PositionBox';
@@ -56,12 +85,10 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       nowCity: '', // 当前所在的城市
-      choiceCity: '', // 点击即将查看的城市
       choiceCityName: '', // 选择查看的城市
-      historyCityArr: [], // 查看历史记录
       citylist: openCityList, // 城市列表
       cityIndexList: ['顶'], // 右边导航栏列表
       maskShow: false, // 弹窗是否弹出
@@ -75,72 +102,47 @@ export default {
       flagText: '顶' // 字母牌显示的字
     };
   },
-  created () {
+  created() {
     this.getNowCity();
     this.getCityListApi();
   },
   computed: {
     // 如果没有选择地址，默认切换到定位所在地址
-    chooseCity () {
+    chooseCity() {
       return this.choiceCityName ? this.choiceCityName : this.nowCity;
     }
   },
   methods: {
     // 定位当前所在城市
-    getNowCity () {
+    getNowCity() {
       this.getCity();
-      this.getHistory();
-      axios.get('http://localhost:1234/nowcity').then((res) => {
-        this.nowCity = res.data.city;
-        if (!this.choiceCity && !this.choiceCityName) {
-          this.choiceCity = this.nowCity;
-          this.choiceCityName = this.nowCity;
-        }
-      }, () => {
-        this.nowCity = '北京';
-        if (!this.choiceCity && !this.choiceCityName) {
-          this.choiceCity = this.nowCity;
-          this.choiceCityName = this.nowCity;
-        }
-      });
+      this.nowCity = '北京';
+      if (!this.choiceCityName) {
+        this.choiceCityName = this.nowCity;
+      }
     },
     // 获取城市列表
-    getCityListApi () {
+    getCityListApi() {
       this.citylist.map((item) => {
         this.cityIndexList.push(item[0]);
       });
       this.getDomHeight();
     },
-    // 存到本地
-    setHistory (arr) {
-      localStorage.setItem('historyCityArr', arr);
-    },
-    // 从本地取
-    getHistory () {
-      let history = localStorage.getItem('historyCityArr');
-      if (!history) {
-        this.historyCityArr = [];
-      } else {
-        this.historyCityArr = history.split(',');
-      }
-    },
     // 存到本地,正在查看的城市
-    setCity (name) {
+    setCity(name) {
       localStorage.setItem('seeCity', name);
     },
     // 从本地取，,正在查看的城市
-    getCity () {
-      let name = localStorage.getItem('seeCity');
+    getCity() {
+      const name = localStorage.getItem('seeCity');
       if (!name) {
-        this.choiceCity = '';
         this.choiceCityName = '';
       } else {
-        this.choiceCity = name;
         this.choiceCityName = name;
       }
     },
     // 搜索框内容
-    searchText (text) {
+    searchText(text) {
       if (text.length === 0) {
         this.associationShow = false;
         return false;
@@ -150,7 +152,7 @@ export default {
       this.searchListContent = getSearchList(text, this.citylist, this.canSearchSpell);
     },
     // 点击城市名字，弹出弹窗确认
-    changeCity (name) {
+    changeCity(name) {
       if (this.choiceCityName === name) {
         // 关闭搜索框（在搜索状态下）
         this.associationShow = false;
@@ -159,22 +161,20 @@ export default {
         return false;
       }
       // 选择的城市的名字
-      this.choiceCity = name;
-      this.maskMessage = `是否选择${name}么？`;
+      this.maskMessage = name;
       this.maskShow = true;
     },
     // 关闭确认弹窗
-    maskClose () {
+    maskClose() {
       this.maskShow = false;
     },
     // 是否确认切换定位
-    chooseResult (res) {
+    chooseResult(res) {
       if (!res) {
         // 不切换，仅关闭弹窗
         this.maskClose();
       } else {
-        this.choiceCityName = this.choiceCity;
-        // this.local();
+        this.choiceCityName = res;
         // 关闭搜索框（在搜索状态下）
         this.associationShow = false;
         // 清除输入框的字（在搜索状态下）
@@ -184,27 +184,19 @@ export default {
         this.maskClose();
       }
     },
-    // 根据定位确定加缓存
-    local () {
-      if (this.choiceCityName !== this.nowCity) {
-        this.historyCityArr.unshift(this.choiceCityName);
-      }
-      this.historyCityArr = this.historyCityArr.slice(0, 2);
-      this.setCity(this.choiceCityName);
-    },
     // 点击右边nav，向citylist组件传值
-    toElement (text) {
+    toElement(text) {
       if (text === '顶') {
         this.$refs.suggest.scrollToElement(this.$refs.positionBox, 200, false, 0);
       }
       this.elementIndex = text;
     },
     // 滚动到相应的dom节点
-    singleLetter (dom) {
+    singleLetter(dom) {
       this.$refs.suggest.scrollToElement(dom, 200, false, 30);
     },
     // 根据滑动距离显示字母牌上的字
-    distance (val) {
+    distance(val) {
       this.elementIndex = '';
       for (let i = 0, len = this.arrHeight.length; i < len; i++) {
         if (val < this.arrHeight[i]) {
@@ -214,8 +206,8 @@ export default {
       }
     },
     // 计算每一部分到顶端的距离
-    getDomHeight () {
-      let arr = getDistance(this.citylist);
+    getDomHeight() {
+      const arr = getDistance(this.citylist);
       // 向开始添加顶端的95px的距离,作为当前定位的高度
       arr.unshift(95);
       let i = 0;
@@ -225,13 +217,8 @@ export default {
       });
     },
     // 是否显示字母牌
-    scrollStore (val) {
+    scrollStore(val) {
       this.flag = val;
-    }
-  },
-  watch: {
-    historyCityArr (val) {
-      this.setHistory(val);
     }
   },
   components: {

@@ -11,11 +11,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "better-scroll": "^1.12.4",
     "fastclick": "^1.0.6",
-    "vue": "^2.5.2",
-    "vue-amap": "^0.5.4"
+    "vue": "^2.5.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

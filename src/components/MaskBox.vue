@@ -3,12 +3,18 @@
     <div class="mask-body"></div>
     <div class="btn-box">
       <div class="message">
-        <p>{{message}}</p>
+        <p>是否选择{{message}}</p>
       </div>
-      <div class="btn-left" @click="chooseTrue()">
+      <div
+        class="btn-left"
+        @click="chooseTrue()"
+      >
         <p>确定</p>
       </div>
-      <div class="btn-right" @click="chooseFalse()">
+      <div
+        class="btn-right"
+        @click="chooseFalse()"
+      >
         <p>取消</p>
       </div>
     </div>
@@ -25,11 +31,11 @@ export default {
     }
   },
   methods: {
-    chooseTrue () {
-      this.$emit('chooseing', true);
+    chooseTrue() {
+      this.$emit('chooseing', this.message);
     },
-    chooseFalse () {
-      this.$emit('chooseing', false);
+    chooseFalse() {
+      this.$emit('chooseing', '');
     }
   }
 };

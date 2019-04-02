@@ -1,5 +1,8 @@
 <template>
-  <div ref="wrapper" class="scroll">
+  <div
+    ref="wrapper"
+    class="scroll"
+  >
     <slot></slot>
   </div>
 </template>
@@ -24,12 +27,12 @@ export default {
       default: false
     }
   },
-  mounted () {
+  mounted() {
     // // 保证在DOM渲染完毕后初始化better-scroll
     this.$nextTick(() => this._initScroll());
   },
   methods: {
-    _initScroll () {
+    _initScroll() {
       if (!this.$refs.wrapper) {
         return;
       }
@@ -59,20 +62,20 @@ export default {
       }
     },
     // 滚向位置
-    scrollTo () {
+    scrollTo() {
       this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments);
     },
     // 滚向元素
-    scrollToElement () {
+    scrollToElement() {
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments);
     },
     // 确保绑定成功
-    refresh () {
+    refresh() {
       this.scroll && this.scroll.refresh();
     }
   },
   watch: {
-    data (val) {
+    data(val) {
       this.$nextTick(() => this.refresh());
     }
   }

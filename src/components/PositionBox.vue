@@ -3,8 +3,14 @@
     <div class="hostory">
       <p>当前定位</p>
       <div class="citybox">
-        <button @click="changeCity(nowCity)" style="text-align:center;">
-          <i class="iconfont icon-dingwei icon" style="margin:0px auto;">
+        <button
+          @click="changeCity(nowCity)"
+          style="text-align:center;"
+        >
+          <i
+            class="iconfont icon-dingwei icon"
+            style="margin:0px auto;"
+          >
             <a style="color:#666;font-size: 13px;">{{nowCity.name}}</a>
           </i>
         </button>
@@ -16,7 +22,7 @@
 <script>
 export default {
   name: 'PositionBox',
-  data () {
+  data() {
     return {
       nowCity: {
         name: '北京',
@@ -24,10 +30,10 @@ export default {
       }
     };
   },
-  created () {
+  created() {
   },
   methods: {
-    changeCity (name) {
+    changeCity(name) {
       this.$emit('changeCity', name);
     }
   }

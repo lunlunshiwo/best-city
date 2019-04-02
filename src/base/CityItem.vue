@@ -1,6 +1,11 @@
 <template>
   <div class="listbox">
-    <p class="city-item" v-for="city in searchListContent" :key="city.id" @click="changeCity(city.name)">{{city.name}}</p>
+    <p
+      class="city-item"
+      v-for="city in searchListContent"
+      :key="city.id"
+      @click="changeCity(city.name)"
+    >{{city.name}}</p>
   </div>
 </template>
 
@@ -11,7 +16,7 @@ export default {
     searchListContent: Array
   },
   methods: {
-    changeCity (name) {
+    changeCity(name) {
       this.$emit('changeName', name);
     }
   }

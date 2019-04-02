@@ -3,7 +3,7 @@ export const getSearchList = (text, list, canSearchSpell) => {
   const reg2 = new RegExp(`^${text}`, 'g');
   const reg3 = new RegExp('^[\\u4E00-\\u9FFF]{1,}$', 'g');
   const reg4 = new RegExp(`^${text}`, 'g');
-  let resList = [];
+  const resList = [];
   if (text.match(reg1) && canSearchSpell) {
     for (let i = 0, len1 = list.length; i < len1; i++) {
       for (let j = 0, len2 = list[i][1].length; j < len2; j++) {

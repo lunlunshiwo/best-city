@@ -2,7 +2,10 @@
   <div class="listbody">
     <scroll :data="searchListContent">
       <div>
-        <city-item :searchListContent="searchListContent" @changeName="changeCity"></city-item>
+        <city-item
+          :searchListContent="searchListContent"
+          @changeName="changeCity"
+        ></city-item>
       </div>
     </scroll>
   </div>
@@ -18,7 +21,7 @@ export default {
   },
   methods: {
     // 点击列表触发改变定位的事件
-    changeCity (name) {
+    changeCity(name) {
       this.$emit('changeName', name);
     }
   },

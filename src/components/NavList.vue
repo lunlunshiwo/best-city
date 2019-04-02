@@ -1,7 +1,16 @@
 <template>
   <div class="navbody">
-    <div class="navList" @touchstart.stop.prevent="start" @touchmove.stop.prevent="move">
-      <div :class="navClass(item)" :data-name="item" v-for="item in navList" :key="item">
+    <div
+      class="navList"
+      @touchstart.stop.prevent="start"
+      @touchmove.stop.prevent="move"
+    >
+      <div
+        :class="navClass(item)"
+        :data-name="item"
+        v-for="item in navList"
+        :key="item"
+      >
         {{item}}
       </div>
     </div>
@@ -16,7 +25,7 @@ export default {
     navList: Array,
     flagText: String
   },
-  data () {
+  data() {
     return {
       touch: {
         start: 0,
@@ -28,25 +37,24 @@ export default {
   },
   methods: {
     // 根据不同的状况赋值不同的样式
-    navClass (item) {
+    navClass(item) {
       return this.flagText === item ? 'flagItem' : 'navItem';
     },
     // 向上触发scroll滚动事件
-    scrollToElement (item) {
-      console.log(item);
+    scrollToElement(item) {
       this.$emit('toElement', item);
     },
     // 触摸开始，并向上触发滚动事件
-    start (e) {
-      let item = handleDomData(e.target, 'data-name');
+    start(e) {
+      const item = handleDomData(e.target, 'data-name');
       this.touch.start = e.touches[0].pageY;
       this.touch.startIndex = getIndex(this.navList, item);
       this.scrollToElement(item);
     },
     // 触摸过程中，根据距离变化应计算滚动到的位置
-    move (e) {
+    move(e) {
       this.touch.end = e.touches[0].pageY;
-      let distance = this.touch.end - this.touch.start;
+      const distance = this.touch.end - this.touch.start;
       this.touch.endIndex = Math.min(Math.max(this.touch.startIndex + Math.floor((distance + 10) / 20), 0), 22);
       this.scrollToElement(this.navList[this.touch.endIndex]);
     }
