@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import App from './App';
-import fastclick from 'fastclick';
-import 'common/icon/iconfont.css';
+// import fastclick from 'fastclick';
 
 Vue.config.productionTip = false;
 
-fastclick.attach(document.body); // fastclick插件使用
+// fastclick.attach(document.body); // fastclick插件使用
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
