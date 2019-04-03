@@ -50,6 +50,7 @@
         </scroll>
       </div>
       <nav-list
+        v-show="!associationShow"
         :nav-list="cityIndexList"
         :flag-text="flagText"
         @toElement="toElement"
@@ -141,10 +142,6 @@ export default {
       const arr = this.citylist.map((item) => item[0]);
       this.cityIndexList = this.cityIndexList.concat(arr);
       this.getDomHeight();
-    },
-    // 存到本地,正在查看的城市
-    setCity(name) {
-      localStorage.setItem('seeCity', name);
     },
     // 搜索框内容
     searchText(text) {
