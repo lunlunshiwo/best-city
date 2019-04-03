@@ -2,9 +2,9 @@
   <div id="app">
     <button @click="showCity">点击</button>
     <vue-city
+      ref="vuecity"
       :canSearchSpell="false"
-      :show="show"
-      @closeChooseCity="close"
+      @closeChooseCity="getCity"
     ></vue-city>
   </div>
 </template>
@@ -17,17 +17,15 @@ export default {
   },
   data: () => {
     return {
-      show: false,
       message: '123'
     };
   },
   methods: {
-    close(val) {
-      this.show = false;
+    getCity(val) {
       console.log(val);
     },
     showCity() {
-      this.show = true;
+      this.$refs.vuecity.show();
     }
   }
 };

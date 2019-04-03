@@ -1,9 +1,6 @@
 <template>
   <transition name="mapStyle">
-    <div
-      id="vuecity"
-      v-if="show"
-    >
+    <div id="vuecity">
       <div class="pattern-box">
         <span
           class="mapBack"
@@ -73,16 +70,16 @@
 </template>
 
 <script>
-import Search from './components/Search';
-import Scroll from './components/Scroll.vue';
-import PositionBox from './components/PositionBox';
-import CityList from '././components/CityList';
-import NavList from './components/NavList';
-import MaskBox from './components/MaskBox';
-import SearchList from './components/SearchList';
-import { getSearchList } from './common/js/search';
-import { getDistance } from './common/js/dom';
-import openCityList from './common/js/cityData';
+import Search from '../components/Search';
+import Scroll from '../components/Scroll.vue';
+import PositionBox from '../components/PositionBox';
+import CityList from '../components/CityList';
+import NavList from '../components/NavList';
+import MaskBox from '../components/MaskBox';
+import SearchList from '../components/SearchList';
+import { getSearchList } from 'common/js/search';
+import { getDistance } from '../common/js/dom';
+import openCityList from '../common/js/cityData';
 
 export default {
   name: 'VueCity',
@@ -97,10 +94,6 @@ export default {
   },
   props: {
     // 是否可以使用拼音（若没拼音这个属性需要设置为false
-    show: {
-      type: Boolean,
-      default: true
-    },
     canSearchSpell: {
       type: Boolean,
       default: true
@@ -117,6 +110,10 @@ export default {
           rank: 'S'
         };
       }
+    },
+    hide: {
+      type: Function,
+      default: null
     }
   },
   data: () => {
@@ -141,9 +138,8 @@ export default {
   methods: {
     // 获取城市列表
     getCityListApi() {
-      this.citylist.map((item) => {
-        this.cityIndexList.push(item[0]);
-      });
+      const arr = this.citylist.map((item) => item[0]);
+      this.cityIndexList = arr;
       this.getDomHeight();
     },
     // 存到本地,正在查看的城市
@@ -179,6 +175,7 @@ export default {
     },
     // 关闭组件
     mapBack(res) {
+      this.hide();
       this.$emit('closeChooseCity', res);
     },
     // 是否确认切换定位
@@ -217,13 +214,17 @@ export default {
     },
     // 计算每一部分到顶端的距离
     getDomHeight() {
-      const arr = getDistance(this.citylist);
-      // 向开始添加顶端的95px的距离,作为当前定位的高度
-      arr.unshift(95);
-      let i = 0;
-      arr.map((val) => {
-        i = i + val;
-        this.arrHeight.push(i);
+      this.$nextTick(() => {
+        const titleHeight = document.querySelector('#vuecity .lists .city-title').offsetHeight;
+        const itemHeight = document.querySelector('#vuecity .lists .city-item').offsetHeight;
+        const positionboxHeight = document.querySelector('#vuecity .position-box').offsetHeight;
+        const arr = getDistance(this.citylist, titleHeight, itemHeight);
+        arr.unshift(positionboxHeight);
+        let i = 0;
+        arr.forEach((val) => {
+          i = i + val;
+          this.arrHeight.push(i);
+        });
       });
     },
     // 是否显示字母牌
@@ -239,8 +240,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import 'common/icon/iconfont.css'
-@import 'common/stylus/index.styl'
 .mapStyle-enter-active, .mapStyle-leave-active
   transition all 0.2s ease
 .mapStyle-enter, .mapStyle-leave-to

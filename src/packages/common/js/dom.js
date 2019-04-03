@@ -1,6 +1,3 @@
-const titleHeight = 30;
-const itemHeight = 35;
-
 // 获取或者给dom属性赋值
 export const handleDomData = (el, name, val) => val ? el.setAttribute(name, val) : el.getAttribute(name);
 
@@ -8,9 +5,9 @@ export const handleDomData = (el, name, val) => val ? el.setAttribute(name, val)
 export const getIndex = (arr, query) => arr.findIndex((val) => val === query);
 
 // 计算链接每一部分的高度
-export function getDistance(arr) {
+export function getDistance(arr, titleHeight, itemHeight) {
   const distanceArr = [];
-  arr.map((item) => {
+  arr.forEach((item) => {
     distanceArr.push(titleHeight + itemHeight * item[1].length);
   });
   return distanceArr;

@@ -38,8 +38,16 @@ export default {
         startIndex: '',
         end: 0,
         endIndex: ''
-      }
+      },
+      itemHight: 20,
+      paddingTop: 10
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.itemHight = document.querySelector('.navList .flagItem').offsetHeight;
+      this.paddingTop = parseInt(getComputedStyle(document.querySelector('#vuecity .navbody'), false).paddingTop, 10);
+    });
   },
   methods: {
     // 根据不同的状况赋值不同的样式
@@ -61,7 +69,12 @@ export default {
     move(e) {
       this.touch.end = e.touches[0].pageY;
       const distance = this.touch.end - this.touch.start;
-      this.touch.endIndex = Math.min(Math.max(this.touch.startIndex + Math.floor((distance + 10) / 20), 0), 22);
+      this.touch.endIndex = Math.min(
+        Math.max(
+          this.touch.startIndex + Math.floor((distance + this.paddingTop) / this.itemHight), 0
+        )
+        , this.navList.length - 1
+      );
       this.scrollToElement(this.navList[this.touch.endIndex]);
     }
   }
