@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.itemHight = document.querySelector('.navList .flagItem').offsetHeight;
+      this.itemHight = document.querySelector('.navList .navItem').offsetHeight;
       this.paddingTop = parseInt(getComputedStyle(document.querySelector('#vuecity .navbody'), false).paddingTop, 10);
     });
   },

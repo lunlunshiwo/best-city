@@ -77,7 +77,7 @@ import CityList from '../components/CityList';
 import NavList from '../components/NavList';
 import MaskBox from '../components/MaskBox';
 import SearchList from '../components/SearchList';
-import { getSearchList } from 'common/js/search';
+import { getSearchList } from '../common/js/search';
 import { getDistance } from '../common/js/dom';
 import openCityList from '../common/js/cityData';
 
@@ -139,7 +139,7 @@ export default {
     // 获取城市列表
     getCityListApi() {
       const arr = this.citylist.map((item) => item[0]);
-      this.cityIndexList = arr;
+      this.cityIndexList = this.cityIndexList.concat(arr);
       this.getDomHeight();
     },
     // 存到本地,正在查看的城市
