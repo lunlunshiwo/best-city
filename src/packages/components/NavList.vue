@@ -39,6 +39,7 @@ export default {
         end: 0,
         endIndex: ''
       },
+      isTouch: false,
       itemHight: 20,
       paddingTop: 10
     };
@@ -52,7 +53,11 @@ export default {
   methods: {
     // 根据不同的状况赋值不同的样式
     navClass(item) {
-      return this.flagText === item ? 'flagItem' : 'navItem';
+      if (this.isTouch) {
+        return this.navList[this.touch.endIndex] === item ? 'flagItem' : 'navItem';
+      } else {
+        return this.flagText === item ? 'flagItem' : 'navItem';
+      }
     },
     // 向上触发scroll滚动事件
     scrollToElement(item) {
@@ -60,6 +65,7 @@ export default {
     },
     // 触摸开始，并向上触发滚动事件
     start(e) {
+      this.isTouch = false;
       const item = handleDomData(e.target, 'data-name');
       this.touch.start = e.touches[0].pageY;
       this.touch.startIndex = getIndex(this.navList, item);
@@ -67,15 +73,19 @@ export default {
     },
     // 触摸过程中，根据距离变化应计算滚动到的位置
     move(e) {
+      this.isTouch = true;
       this.touch.end = e.touches[0].pageY;
       const distance = this.touch.end - this.touch.start;
       this.touch.endIndex = Math.min(
         Math.max(
           this.touch.startIndex + Math.floor((distance + this.paddingTop) / this.itemHight), 0
         )
-        ,  this.navList.length - 1
+        , this.navList.length - 1
       );
       this.scrollToElement(this.navList[this.touch.endIndex]);
+    },
+    end() {
+      this.isTouch = false;
     }
   }
 };

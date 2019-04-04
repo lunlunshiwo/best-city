@@ -3,7 +3,7 @@
     <p
       v-for="city in searchListContent"
       :key="city.id"
-      class="city-item"
+      class="city-search-item"
       @click="changeCity(city)"
     >{{ city.name }}</p>
   </div>
@@ -30,7 +30,7 @@ export default {
 .listbox
   width 100%
   background #fff
-  .city-item
+  .city-search-item
     background #fff
     margin 0px 10px
     height 35px

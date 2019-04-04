@@ -8,7 +8,7 @@ export const getIndex = (arr, query) => arr.findIndex((val) => val === query);
 export function getDistance(arr, titleHeight, itemHeight) {
   const distanceArr = [];
   arr.forEach((item) => {
-    distanceArr.push(titleHeight + itemHeight * item[1].length);
+    distanceArr.push(titleHeight + itemHeight * item[1].length - 1);
   });
   return distanceArr;
 }

@@ -56,15 +56,13 @@ export default {
       height 30px
       border-top 1px solid #ccc
       background #f0efed
-      line-height 29px
+      line-height 30px
       padding-left 10px
-      box-sizing border-box
     .city-item
       margin 0px 10px
       height 35px
       line-height 35px
       border-bottom 1px solid #ccc
-      box-sizing border-box
     .city-item:last-child
       border none
 </style>
