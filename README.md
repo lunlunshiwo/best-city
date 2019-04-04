@@ -1,6 +1,6 @@
 # best-city
 
-[![npm](https://img.shields.io/badge/npm-1.0.0-blue.svg)](https://www.npmjs.com/package/best-city) [![downloads](https://img.shields.io/badge/downloads-1.0.0-green.svg)](https://github.com/lunlunshiwo/best-city)
+[![npm](https://img.shields.io/badge/npm-1.0.1-blue.svg)](https://www.npmjs.com/package/best-city) [![downloads](https://img.shields.io/badge/downloads-1.0.1-green.svg)](https://github.com/lunlunshiwo/best-city)
 
 ## best-city 是什么
 
@@ -12,7 +12,7 @@
 
 
 ## Attributes
-在1.0.0发布的best-city中，用户可以根据设置属性来定制属于自己的移动端城市选择组件。
+在1.0.1发布的best-city中，用户可以根据设置属性来定制属于自己的移动端城市选择组件。
 
 | 参数 | 说明	| 类型 | 可选值| 默认值|
 |:---|:---|:---|:---|:---|
@@ -22,14 +22,14 @@
 | backStyle | 返回键的样式 | String | cross/retreat/tilted/fold/return | retreat |
 
 ## Events
-在1.0.0发布的best-city中，用户可以根据事件在获得插件的返回值。
+在1.0.1发布的best-city中，用户可以根据事件在获得插件的返回值。
 
 | 事件名称 | 说明	| 回调参数 |
 |:---|:---|:---|
 | closeChooseCity | 关闭城市选择插件的事件 | 选中的 city 对象 / null |
 
 ## Methods
-在1.0.0发布的best-city中，用户可以调用插件的方法达到自己的目的。
+在1.0.1发布的best-city中，用户可以调用插件的方法达到自己的目的。
 
 | 方法名称 | 说明	| 回调参数 |
 |:---|:---|:---|
@@ -43,9 +43,9 @@ npm install best-city -S
 ```
 然后添加到你的项目中, 将下列代码加在 main.js中:
 ```js
-import bestCity from 'best-city'
+import BestCity from 'best-city'
 
-Vue.use(bestCity)
+Vue.use(BestCity)
 ```
 ## Model
 ```HTML
