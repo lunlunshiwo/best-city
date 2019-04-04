@@ -1,5 +1,5 @@
-import FineCity from './FineCity.vue';
+import BestCity from './BestCity.vue';
 
-FineCity.install = Vue => Vue.component(FineCity.name, FineCity);
+BestCity.install = Vue => Vue.component(BestCity.name, BestCity);
 // 导出模块
-export default FineCity;
+export default BestCity;

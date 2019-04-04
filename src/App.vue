@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <button @click="showCity">点击</button>
-    <fine-city
+    <best-city
       ref="vuecity"
       slide="horizontal"
       backStyle="tilted"
       @closeChooseCity="getCity"
-    ></fine-city>
+    ></best-city>
   </div>
 </template>
 <script>
-import FineCity from './index.js';
+import BestCity from './index.js';
 export default {
   name: 'app',
   components: {
-    'fine-city': FineCity
+    'best-city': BestCity
   },
   methods: {
     getCity(val) {

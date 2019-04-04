@@ -13,7 +13,7 @@
 <script>
 import CityView from './view/view.vue';
 export default {
-  name: 'FineCity',
+  name: 'BestCity',
   components: {
     'city-view': CityView
   },

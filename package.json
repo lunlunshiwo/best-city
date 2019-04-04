@@ -1,14 +1,14 @@
 {
-  "name": "fine-city",
-  "version": "1.0.5",
+  "name": "best-city",
+  "version": "1.0.0",
   "description": "A Vue.js project,the purpose is to make the city more convenient",
   "author": "lunlunshiwo <1403239611@qq.com>",
   "license": "MIT",
   "private": false,
-  "main": "dist/fine-city.js",
+  "main": "dist/best-city.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:lunlunshiwo/fine-city.git"
+    "url": "git@github.com:lunlunshiwo/best-city.git"
   },
   "files": [
     "dist",
@@ -20,7 +20,7 @@
     "scroll",
     "search"
   ],
-  "homepage": "https://github.com/lunlunshiwo/fine-city",
+  "homepage": "https://github.com/lunlunshiwo/best-city",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
