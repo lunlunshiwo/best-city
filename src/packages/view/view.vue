@@ -1,73 +1,71 @@
 <template>
-  <transition name="mapStyle">
-    <div id="vuecity">
-      <div class="pattern-box">
-        <span
-          class="mapBack"
-          @click="mapBack(null)"
-        >
-          <i
-            class="iconfont icon-fanhui2"
-            style="fontSize:30px"
-          ></i>
-        </span>
-        <search
-          :can-search-spell="canSearchSpell"
-          :clear-text="clearSearch"
-          @txtdata="searchText"
-        />
-      </div>
-      <div style="height: calc(100% - 45px);width: 100%;">
-        <transition name="list">
-          <search-list
-            v-if="associationShow"
-            :search-list-content="searchListContent"
-            @changeName="changeCity"
-          />
-        </transition>
-        <scroll
-          ref="suggest"
-          :data="citylist"
-          :probe-type="3"
-          :listen-scroll="true"
-          @distance="distance"
-          @scrollStore="scrollStore"
-        >
-          <div>
-            <div ref="positionBox" />
-            <position-box
-              :location="location"
-              :choice-city-name="chooseCityName"
-              @changeCity="changeCity"
-            />
-            <city-list
-              :citylist="citylist"
-              :element-index="elementIndex"
-              @positionCity="changeCity"
-              @singleLetter="singleLetter"
-            />
-          </div>
-        </scroll>
-      </div>
-      <nav-list
-        v-show="!associationShow"
-        :nav-list="cityIndexList"
-        :flag-text="flagText"
-        @toElement="toElement"
+  <div id="vuecity">
+    <div class="pattern-box">
+      <span
+        class="mapBack"
+        @click="mapBack(null)"
+      >
+        <i
+          :class="['iconfont', backIcon]"
+          style="fontSize:28px"
+        ></i>
+      </span>
+      <search
+        :can-search-spell="canSearchSpell"
+        :clear-text="clearSearch"
+        @txtdata="searchText"
       />
-      <mask-box
-        v-if="maskShow"
-        :message="maskMessage"
-        @chooseing="chooseResult"
-      />
-      <transition name="flag">
-        <div
-          v-if="flag"
-          class="nowFlag"
-        >{{ flagText }}</div>
-      </transition>
     </div>
-  </transition>
+    <div style="height: calc(100% - 45px);width: 100%;">
+      <transition name="list">
+        <search-list
+          v-if="associationShow"
+          :search-list-content="searchListContent"
+          @changeName="changeCity"
+        />
+      </transition>
+      <scroll
+        ref="suggest"
+        :data="citylist"
+        :probe-type="3"
+        :listen-scroll="true"
+        @distance="distance"
+        @scrollStore="scrollStore"
+      >
+        <div>
+          <div ref="positionBox" />
+          <position-box
+            :location="location"
+            :choice-city-name="chooseCityName"
+            @changeCity="changeCity"
+          />
+          <city-list
+            :citylist="citylist"
+            :element-index="elementIndex"
+            @positionCity="changeCity"
+            @singleLetter="singleLetter"
+          />
+        </div>
+      </scroll>
+    </div>
+    <nav-list
+      v-show="!associationShow"
+      :nav-list="cityIndexList"
+      :flag-text="flagText"
+      @toElement="toElement"
+    />
+    <mask-box
+      v-if="maskShow"
+      :message="maskMessage"
+      @chooseing="chooseResult"
+    />
+    <transition name="flag">
+      <div
+        v-if="flag"
+        class="nowFlag"
+      >{{ flagText }}</div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -115,7 +113,11 @@ export default {
     hide: {
       type: Function,
       default: null
-    }
+    },
+    backStyle: {
+      type: String,
+      default: 'retreat' // cross/retreat/tilted/fold/return
+    },
   },
   data: () => {
     return {
@@ -132,6 +134,26 @@ export default {
       flag: false, // 字母牌是否显示
       flagText: '顶' // 字母牌显示的字
     };
+  },
+  computed: {
+    backIcon() {
+      switch (true) {
+        case this.backStyle === 'cross':
+          return 'icon-guanbi';
+          break;
+        case this.backStyle === 'tilted':
+          return 'icon-fanhui2';
+          break;
+        case this.backStyle === 'fold':
+          return 'icon-fanhui1';
+          break;
+        case this.backStyle === 'return':
+          return 'icon-fanhui';
+          break;
+        default:
+          return 'icon-fanhui3';
+      }
+    }
   },
   created() {
     this.getCityListApi();
@@ -239,10 +261,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.mapStyle-enter-active, .mapStyle-leave-active
-  transition all 0.2s ease
-.mapStyle-enter, .mapStyle-leave-to
-  transform translateY(-100%)
 p
   text-align start
 #vuecity
@@ -252,7 +270,7 @@ p
   color #2c3e50
   height 100%
   width 100%
-  font-size 12px
+  font-size 14px
   position absolute
   top 0px
   left 0px

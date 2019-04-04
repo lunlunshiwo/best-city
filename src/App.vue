@@ -3,7 +3,8 @@
     <button @click="showCity">点击</button>
     <fine-city
       ref="vuecity"
-      :canSearchSpell="false"
+      slide="horizontal"
+      backStyle="tilted"
       @closeChooseCity="getCity"
     ></fine-city>
   </div>
@@ -14,11 +15,6 @@ export default {
   name: 'app',
   components: {
     'fine-city': FineCity
-  },
-  data: () => {
-    return {
-      message: '123'
-    };
   },
   methods: {
     getCity(val) {

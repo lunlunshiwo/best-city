@@ -1,8 +1,10 @@
 <template>
-  <transition name="mapStyle">
+  <transition :name="slideStyle">
     <city-view
       v-if="showStatus"
       :hide="hide"
+      :backStyle="backStyle"
+      :canSearchSpell="canSearchSpell"
       @closeChooseCity="closeChooseCity"
     ></city-view>
   </transition>
@@ -33,12 +35,25 @@ export default {
           rank: 'S'
         };
       }
-    }
+    },
+    slide: {
+      type: String,
+      default: 'vertical' // horizontal
+    },
+    backStyle: {
+      type: String,
+      default: 'retreat' // cross/retreat/tilted/fold/return
+    },
   },
   data() {
     return {
       showStatus: false
     };
+  },
+  computed: {
+    slideStyle() {
+      return this.slide === 'horizontal' ? 'horizontalSide' : 'verticalSide'
+    }
   },
   methods: {
     show() {
@@ -54,10 +69,12 @@ export default {
 };
 </script>
 <style lang="stylus">
-@import '/common/stylus/index.styl';
-@import url('https://at.alicdn.com/t/font_1125658_wv3sr6cqm8f.css');
-.mapStyle-enter-active, .mapStyle-leave-active
+@import '/common/stylus/index.styl'
+@import url('https://at.alicdn.com/t/font_1125658_wv3sr6cqm8f.css')
+.horizontalSide-enter-active, .horizontalSide-leave-active, .verticalSide-enter-active, .verticalSide-leave-active
   transition all 0.2s ease
-.mapStyle-enter, .mapStyle-leave-to
+.horizontalSide-enter, .horizontalSide-leave-to
+  transform translateX(100%)
+.verticalSide-enter, .verticalSide-leave-to
   transform translateY(-100%)
 </style>

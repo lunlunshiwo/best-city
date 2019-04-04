@@ -84,7 +84,7 @@ export default {
   height: 30px;
   border-radius: 15px;
   background: #eee;
-  padding-top: 6px;
+  padding-top: 7px;
   box-sizing: border-box;
 }
 .searchInput {
@@ -96,7 +96,7 @@ export default {
   outline: none;
   border-radius: 20px;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 13px;
   background: #eee;
   line-height: 18px;
   height: 18px;
@@ -134,8 +134,7 @@ input::-webkit-clear {
   background: #eee;
 }
 .search-box > .ipt-box > .icon-box > .icon {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 900;
-  color: #aaa;
 }
 </style>

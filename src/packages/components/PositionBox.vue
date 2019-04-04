@@ -11,7 +11,7 @@
             class="iconfont icon-tubiao- icon"
             style="margin:0px auto;"
           >
-            <a style="color:#666;font-size: 13px;">{{ location.name }}</a>
+            <a style="color:#666;font-size: 14px;">{{ location.name }}</a>
           </i>
         </button>
       </div>
