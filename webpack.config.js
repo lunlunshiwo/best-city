@@ -1,13 +1,24 @@
 var path = require('path')
 var webpack = require('webpack')
+const NODE_ENV = process.env.NODE_ENV
 
 module.exports = {
-  entry: './src/main.js',
+  // 根据不同的执行环境配置不同的入口
+  entry: NODE_ENV == 'development' ? './src/main.js' : './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: 'fine-city.js',
+    library: 'fine-city', // 指定的就是你使用require时的模块名
+    libraryTarget: 'umd', // 指定输出格式
+    umdNamedDefine: true // 会对 UMD 的构建过程中的 AMD 模块进行命名。否则就使用匿名的 define
   },
+  // entry: './src/main.js',
+  // output: {
+  //   path: path.resolve(__dirname, './dist'),
+  //   publicPath: '/dist/',
+  //   filename: 'build.js'
+  // },
   module: {
     rules: [
       {

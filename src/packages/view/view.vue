@@ -206,7 +206,8 @@ export default {
     // 根据滑动距离显示字母牌上的字
     distance(val) {
       this.elementIndex = '';
-      const index = this.arrHeight.findIndex((item) => val < item);
+      let index = this.arrHeight.findIndex((item) => val < item);
+      index = index === -1 ? this.arrHeight.length - 1 : index;
       this.flagText = this.cityIndexList[index];
     },
     // 计算每一部分到顶端的距离
@@ -241,6 +242,8 @@ export default {
   transition all 0.2s ease
 .mapStyle-enter, .mapStyle-leave-to
   transform translateY(-100%)
+p
+  text-align start
 #vuecity
   font-family 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased

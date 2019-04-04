@@ -73,7 +73,7 @@ export default {
         Math.max(
           this.touch.startIndex + Math.floor((distance + this.paddingTop) / this.itemHight), 0
         )
-        , this.navList.length - 1
+        ,  this.navList.length - 1
       );
       this.scrollToElement(this.navList[this.touch.endIndex]);
     }
