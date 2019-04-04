@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <button @click="showCity">点击</button>
-    <vue-city
+    <fine-city
       ref="vuecity"
       :canSearchSpell="false"
       @closeChooseCity="getCity"
-    ></vue-city>
+    ></fine-city>
   </div>
 </template>
 <script>
-import VueCity from './index.js';
+import FineCity from './index.js';
 export default {
-  name: 'VueCity',
+  name: 'app',
   components: {
-    'vue-city': VueCity
+    'fine-city': FineCity
   },
   data: () => {
     return {

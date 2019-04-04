@@ -12,6 +12,7 @@
 import CityView from './view/view.vue';
 
 export default {
+  name: 'FineCity',
   components: {
     'city-view': CityView
   },

@@ -1,8 +1,8 @@
 import fastclick from 'fastclick';
-import VueCity from './VueCity.vue';
+import FineCity from './FineCity.vue';
 const comment = {
   install: (Vue) => {
-    Vue.component(VueCity.name, VueCity);
+    Vue.component(FineCity.name, FineCity);
   }
 };
 fastclick.attach(document.body); // fastclick插件使用
@@ -12,4 +12,4 @@ if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(comment);
 }
 // 导出模块
-export default VueCity;
+export default FineCity;

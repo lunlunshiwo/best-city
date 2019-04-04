@@ -1,5 +1,5 @@
 import fastclick from 'fastclick';
-import VueCity from './packages/index.js';
+import VueCity from './packages/FineCity.vue';
 const comment = {
   install: (Vue) => {
     Vue.component(VueCity.name, VueCity);
