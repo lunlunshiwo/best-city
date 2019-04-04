@@ -95,6 +95,7 @@ export default {
       p
         font-size 16px
         font-weight 900
+        text-align center
     .btn-right
       width 149px
       height 45px
@@ -106,4 +107,5 @@ export default {
       p
         font-size 16px
         font-weight 900
+        text-align center
 </style>
