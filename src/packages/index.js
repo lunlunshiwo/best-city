@@ -1,5 +1,6 @@
 import fastclick from 'fastclick';
 import FineCity from './FineCity.vue';
+import '../packages/common/icon/iconfont'
 const comment = {
   install: (Vue) => {
     Vue.component(FineCity.name, FineCity);

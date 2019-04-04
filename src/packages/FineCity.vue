@@ -10,7 +10,6 @@
 
 <script>
 import CityView from './view/view.vue';
-
 export default {
   name: 'FineCity',
   components: {
@@ -54,10 +53,9 @@ export default {
   }
 };
 </script>
-
 <style lang="stylus">
-@import 'common/icon/iconfont.css'
-@import 'common/stylus/index.styl'
+@import '/common/stylus/index.styl';
+@import url('https://at.alicdn.com/t/font_1125658_wv3sr6cqm8f.css');
 .mapStyle-enter-active, .mapStyle-leave-active
   transition all 0.2s ease
 .mapStyle-enter, .mapStyle-leave-to
